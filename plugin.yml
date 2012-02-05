@@ -1,6 +1,6 @@
 name: NoSpawnEggs
 main: com.goosemonkey.NoSpawnEggs.NoSpawnEggs
-version: 1.1.0
+version: 1.2.0
 description: Prevents people without the appropriate permission from spawning mobs with Spawn Eggs.
 author: GooseMonkey97
 website: http://dev.bukkit.org/server-mods/nospawneggs/
@@ -9,3 +9,76 @@ commands:
     nospawneggs:
         description: Reloads the config
         usage: /<command>
+        permission: nospawneggs.reload
+permissions:
+    nospawneggs.*:
+        default: op
+        description: Gives access to all commands
+        children:
+            nospawneggs.animal.*: true
+            nospawneggs.monster.*: true
+            nospawneggs.npc.*: true
+            nospawneggs.reload: true
+            nospawneggs.snowgolem: true
+            nospawneggs.id.*: true
+            nospawneggs.unknown: true
+            nospawneggs.chickenegg.*: true
+    nospawneggs.animal.*:
+        default: op
+        description: Gives access to animal spawning
+        children:
+            nospawneggs.animal.pig: true
+            nospawneggs.animal.sheep: true
+            nospawneggs.animal.cow: true
+            nospawneggs.animal.chicken: true
+            nospawneggs.animal.squid: true
+            nospawneggs.animal.wolf: true
+            nospawneggs.animal.mooshroom: true
+    nospawneggs.monster.*:
+        default: op
+        description: Gives access to monster spawning
+        children:
+            nospawneggs.monster.creeper: true
+            nospawneggs.monster.skeleton: true
+            nospawneggs.monster.spider: true
+            nospawneggs.monster.zombie: true
+            nospawneggs.monster.slime: true
+            nospawneggs.monster.ghast: true
+            nospawneggs.monster.pigzombie: true
+            nospawneggs.monster.enderman: true
+            nospawneggs.monster.cavespider: true
+            nospawneggs.monster.silverfish: true
+            nospawneggs.monster.blaze: true
+            nospawneggs.monster.magmacube: true
+    nospawneggs.npc.*:
+        default: op
+        description: Gives access to NPC spawning
+        children:
+            nospawneggs.npc.villager: true
+    nospawneggs.reload:
+        default: op
+        description: Allows to reload
+        command: /nospawneggs
+    nospawneggs.id.*:
+        default: op
+        description: Allows to spawn all unknown IDs
+        children:
+             nospawneggs.unknown: true
+    nospawneggs.snowgolem.*:
+        default: op
+        description: Allows user to create snowgolems in creative/survival
+        children:
+            nospawneggs.snowgolem.creative: true
+            nospawneggs.snowgolem.survival: true
+    nospawneggs.snowgolem.survival:
+        default: op
+        description: Allows user to create snowgolems in survival mode
+    nospawneggs.snowgolem.creative:
+        default: op
+        description: Allows user to create snowgolems in creative mode
+    nospawneggs.chickenegg.*:
+        default: op
+        description: Allows user to override BlockChickenEgg
+        children:
+            nospawneggs.chickenegg.survival: true
+            nospawneggs.chickenegg.creative: true

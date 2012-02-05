@@ -1,9 +1,13 @@
 package com.goosemonkey.NoSpawnEggs;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import com.goosemonkey.NoSpawnEggs.config.Config;
+import com.goosemonkey.NoSpawnEggs.config.Names;
+import com.goosemonkey.NoSpawnEggs.config.Property;
 
 public class PlayerEggThrowListener implements Listener
 {
@@ -17,16 +21,22 @@ public class PlayerEggThrowListener implements Listener
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e)
 	{
+		if (e.getAction() != Action.RIGHT_CLICK_BLOCK &&
+				e.getAction() != Action.RIGHT_CLICK_AIR)
+		{
+			return;
+		}
+		
 		if (e.getPlayer().getItemInHand().getTypeId() == 383)
 		{
-			if (plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.*")||
-			   (e.getPlayer().isOp() && plugin.getConfig().getBoolean("allowOpsAllPermissions", true)))
+			if (e.getPlayer().hasPermission("nospawneggs.*"))
 			{
 				//Do nothing
 				return;
 			}
 			
 			int eggMeta = e.getPlayer().getItemInHand().getDurability();
+			
 			EntityType type = null;
 			
 			switch (eggMeta)
@@ -53,21 +63,17 @@ public class PlayerEggThrowListener implements Listener
 			case 120: type = EntityType.VILLAGER; break;
 			
 			default: type = EntityType.MISSINGNO;
-				
 			}
 			
 			String properName = "Entity";
 			
-			FileConfiguration names = plugin.names.yml;
-			
-			if (type != null)
+			try
 			{
-				properName = type.toString();
+				properName = Config.getName(Names.valueOf("EID"+eggMeta));
 			}
-			
-			if (names.isSet(""+eggMeta))
+			catch (IllegalArgumentException ex)
 			{
-				properName = names.getString(""+eggMeta);
+				//Nothing
 			}
 			
 			if (type == EntityType.CREEPER || type == EntityType.SKELETON ||
@@ -77,17 +83,15 @@ public class PlayerEggThrowListener implements Listener
 				type == EntityType.CAVESPIDER || type == EntityType.SILVERFISH ||
 				type == EntityType.BLAZE || type == EntityType.MAGMACUBE)			
 			{
-				if (plugin.getConfig().getBoolean("allowAllMonsterSpawns", false) ||
-						plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.monster."+type) ||
-						plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.monster.*") ||
-						plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.*"))
+				if (Config.getBoolean(Property.ALLOW_ALL_MONSTER_SPAWNS) ||
+						e.getPlayer().hasPermission("nospawneggs.monster."+type))
 				{
 					return;
 				}
 				else
 				{
 					e.setCancelled(true);
-					e.getPlayer().sendMessage("§eYou don't have permission to spawn this "+properName+"!");
+					e.getPlayer().sendMessage(String.format("§e"+Config.getName(Names.NO_EGG_PERM), "§3"+properName+"§e"));
 					return;
 				}
 			}
@@ -97,53 +101,54 @@ public class PlayerEggThrowListener implements Listener
 				type == EntityType.SQUID || type == EntityType.WOLF ||
 				type == EntityType.MOOSHROOM )
 			{
-				if (plugin.getConfig().getBoolean("allowAllAnimalSpawns", false) ||
-						plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.animal."+type) ||
-						plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.animal.*") ||
-						plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.*"))
+				if (Config.getBoolean(Property.ALLOW_ALL_ANIMAL_SPAWNS) ||
+						e.getPlayer().hasPermission("nospawneggs.animal."+type))
 				{
 					return;
 				}
 				else
 				{
 					e.setCancelled(true);
-					e.getPlayer().sendMessage("§eYou don't have permission to spawn this "+properName+"!");
+					e.getPlayer().sendMessage(String.format("§e"+Config.getName(Names.NO_EGG_PERM), "§3"+properName+"§e"));
 					return;
 				}
 			}
 			
 			if (type == EntityType.VILLAGER)
 			{
-				if (plugin.getConfig().getBoolean("allowAllNPCSpawns", false) ||
-						plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.npc."+type) ||
-						plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.npc.*") ||
-						plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.*"))
+				if (Config.getBoolean(Property.ALLOW_ALL_NPC_SPAWNS) ||
+						e.getPlayer().hasPermission("nospawneggs.npc."+type))
 				{
 					return;
 				}
 				else
 				{
 					e.setCancelled(true);
-					e.getPlayer().sendMessage("§eYou don't have permission to spawn this "+properName+"!");
+					e.getPlayer().sendMessage(String.format("§e"+Config.getName(Names.NO_EGG_PERM), "§3"+properName+"§e"));
 					return;
 				}
 			}
 			
 			//Unknown mobs, handling by id
-			if (plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.unknown")||
-				plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.*")||
-				plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.id."+eggMeta)||
-				plugin.getPermHandler().hasPermission(e.getPlayer(), "nospawneggs.id.*")||
-				plugin.getConfig().getBoolean("allowAllUnknownSpawns", false))
-				{
-					return;
-				}
+			if (e.getPlayer().hasPermission("nospawneggs.unknown")||
+				(Config.getBoolean(Property.ALLOW_ALL_UNKNOWN_SPAWNS)))
+			{
+				return;
+			}
+			
+			if (e.getPlayer().hasPermission("nospawneggs.id."+eggMeta))
+			{
+				return;
+			}
 			
 			e.setCancelled(true);
-			e.getPlayer().sendMessage("§eYou don't have permission to spawn this "+
-			(names.isString(""+eggMeta) ? names.getString(""+eggMeta) : "Entity")
-			+"!");
-			return;
+			
+			String unknownName;
+			
+			unknownName = plugin.customNames.getCustomNames().getString(String.valueOf(eggMeta), "Entity");
+			
+			e.getPlayer().sendMessage(String.format("§e"+Config.getName(Names.NO_EGG_PERM),
+				"§3"+unknownName+"§e"));
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package com.goosemonkey.NoSpawnEggs;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import org.bukkit.command.Command;
@@ -9,41 +10,41 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.goosemonkey.NoSpawnEggs.config.Config;
+import com.goosemonkey.NoSpawnEggs.config.ConfigObject;
+import com.goosemonkey.NoSpawnEggs.config.CustomNames;
+import com.goosemonkey.NoSpawnEggs.config.Names;
+
 public class NoSpawnEggs extends JavaPlugin {
 
 	public PluginDescriptionFile pdf;
 	public Logger log;
-	
-	private NSEPerms perm;
-	public CustomNames names;
+	public static File folder = new File("plugins/NoSpawnEggs");
+	public CustomNames customNames;
 	
 	public void onEnable() 
 	{		
 		//initialize vars
 		pdf = this.getDescription();
 		log = this.getServer().getLogger();
-		perm = new NSEPerms(this);
+		customNames = new CustomNames(this);
 		
-		this.getConfig();
-		this.getConfig().options().copyDefaults(true);
-		this.getConfig().options().header(header);
-		this.saveConfig();
+		Config.setup(new ConfigObject());
 		
-		this.names = new CustomNames(this);
-
 		PlayerEggThrowListener petl = new PlayerEggThrowListener(this);
 		this.getServer().getPluginManager().registerEvents(petl, this);
 		
 //		PlayerPumpkinListener ppl = new PlayerPumpkinListener(this);
-//		this.getServer().getPluginManager().registerEvents(ppl, this); DISABLED UNTIL 1.1R4?
+//		this.getServer().getPluginManager().registerEvents(ppl, this);
+		
+		ChickenEggListener cel = new ChickenEggListener(this);
+		this.getServer().getPluginManager().registerEvents(cel, this);
 		
 		log.info("NoSpawnEggs v"+pdf.getVersion()+" enabled!");
 	}
 
 	public void onDisable()
 	{
-		this.saveConfig();
-		this.names.saveYamls();
 		log.info("NoSpawnEggs v"+pdf.getVersion()+" disabled.");
 	}
 	
@@ -51,9 +52,9 @@ public class NoSpawnEggs extends JavaPlugin {
 	{
 		if (sender instanceof ConsoleCommandSender)
 		{
-			this.reloadConfig();
-			names.loadYamls();
-			sender.sendMessage("§eNoSpawnEggs config and names reloaded.");
+			Config.setup(new ConfigObject());
+			this.customNames.loadYamls();
+			sender.sendMessage(Config.getName(Names.RELOADED));
 			return true;
 		}
 		
@@ -68,31 +69,16 @@ public class NoSpawnEggs extends JavaPlugin {
 			return false;
 		}
 		
-		if (getPermHandler().hasPermission(player, "nospawneggs.reload") || player.isOp())
+		if (player.hasPermission("nospawneggs.reload") || player.isOp())
 		{
-			this.reloadConfig();
-			player.sendMessage("§eNoSpawnEggs config reloaded.");
+			Config.setup(new ConfigObject());
+			player.sendMessage(Config.getName(Names.RELOADED));
 			return true;
 		}
 		else
 		{
-			player.sendMessage("§eYou don't have permission to reload the config.");
+			player.sendMessage(Config.getName(Names.NO_RELOAD_PERM));
 			return true;
 		}
 	}
-	
-	public NSEPerms getPermHandler()
-	{
-		return perm;
-	}
-	
-	private String header = 
-			"NoSpawnEggs config file. http://dev.bukkit.org/server-mods/nospawneggs/\n\n" +
-			"Key for configuration values:\n\n" +
-			"allowAllMonsterSpawns: Disable the blocking of Monsters\n" +
-			"allowAllAnimalSpawns: Disable the blocking of Animals\n" +
-			"allowAllNPCSpawns: Disable the blocking of NPC spawns\n" +
-			"allowAllUnknownSpawns: Can mobs unknown to the plugin be spawned freely? (Not recommended)\n" +
-			"blockSnowGolems: [Broken]\n" +
-			"onlyBlockGolemsInCreative: [Broken]\n";
 }

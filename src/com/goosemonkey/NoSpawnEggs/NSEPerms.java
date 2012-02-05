@@ -5,6 +5,7 @@ import org.bukkit.entity.Player;
 import ru.tehkode.permissions.PermissionManager;
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 
+@Deprecated
 public class NSEPerms
 {
 	private NoSpawnEggs plugin;
