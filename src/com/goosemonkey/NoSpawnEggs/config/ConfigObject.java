@@ -12,12 +12,15 @@ public class ConfigObject
 {	
 	private final File configFile = new File(NoSpawnEggs.folder, "config.yml");
 	private final File namesFile = new File(NoSpawnEggs.folder, "names.yml");
-	private final Configuration config = new Configuration(configFile);
-    private final Configuration names = new Configuration(namesFile);
+	private final Configuration config;
+    private final Configuration names;
     
     public ConfigObject()
     {
     	if (!NoSpawnEggs.folder.exists()) NoSpawnEggs.folder.mkdir();
+    	
+    	config = new Configuration(configFile);
+    	names = new Configuration(namesFile);
     	
     	reloadConfig();
         config.load();
