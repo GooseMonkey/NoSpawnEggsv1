@@ -145,7 +145,7 @@ public class PlayerEggThrowListener implements Listener
 			
 			String unknownName;
 			
-			unknownName = plugin.customNames.getCustomNames().getString(String.valueOf(eggMeta), "Entity");
+			unknownName = plugin.getCustomNames().getCustomNames().getString(String.valueOf(eggMeta), "Entity");
 			
 			e.getPlayer().sendMessage(String.format("§e"+Config.getName(Names.NO_EGG_PERM),
 				"§3"+unknownName+"§e"));

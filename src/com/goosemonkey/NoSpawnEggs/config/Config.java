@@ -2,7 +2,7 @@ package com.goosemonkey.NoSpawnEggs.config;
 
 public class Config
 {
-	public static ConfigObject config;
+	private static ConfigObject config;
 	
 	public static void setup(ConfigObject cfg)
 	{

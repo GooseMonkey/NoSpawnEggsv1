@@ -17,10 +17,9 @@ import com.goosemonkey.NoSpawnEggs.config.Names;
 
 public class NoSpawnEggs extends JavaPlugin {
 
-	public PluginDescriptionFile pdf;
-	public Logger log;
-	public static File folder = new File("plugins/NoSpawnEggs");
-	public CustomNames customNames;
+	private PluginDescriptionFile pdf;
+	private Logger log;
+	private CustomNames customNames;
 	
 	public void onEnable() 
 	{		
@@ -80,5 +79,15 @@ public class NoSpawnEggs extends JavaPlugin {
 			player.sendMessage(Config.getName(Names.NO_RELOAD_PERM));
 			return true;
 		}
+	}
+	
+	public CustomNames getCustomNames()
+	{
+		return this.customNames;
+	}
+	
+	public static File getPluginDirectory()
+	{
+		return new File("plugins/NoSpawnEggs");
 	}
 }

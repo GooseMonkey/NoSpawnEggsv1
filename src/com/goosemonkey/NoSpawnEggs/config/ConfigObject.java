@@ -10,23 +10,23 @@ import com.goosemonkey.NoSpawnEggs.NoSpawnEggs;
 @SuppressWarnings ("deprecation")
 public class ConfigObject
 {	
-	private final File configFile = new File(NoSpawnEggs.folder, "config.yml");
-	private final File namesFile = new File(NoSpawnEggs.folder, "names.yml");
+	private final File configFile = new File(NoSpawnEggs.getPluginDirectory(), "config.yml");
+	private final File namesFile = new File(NoSpawnEggs.getPluginDirectory(), "names.yml");
 	private final Configuration config;
     private final Configuration names;
     
     public ConfigObject()
     {
-    	if (!NoSpawnEggs.folder.exists()) NoSpawnEggs.folder.mkdir();
+    	if (!NoSpawnEggs.getPluginDirectory().exists()) NoSpawnEggs.getPluginDirectory().mkdir();
     	
     	config = new Configuration(configFile);
     	names = new Configuration(namesFile);
     	
-    	reloadConfig();
-        config.load();
+    	this.reloadConfig();
+        this.config.load();
 
-        reloadNames();
-        names.load();
+        this.reloadNames();
+        this.names.load();
     }
     
     private void reloadConfig()
@@ -44,7 +44,7 @@ public class ConfigObject
     
     private void reloadNames()
     {
-        names.load();
+        this.names.load();
         
         for (Names def : Names.values())
         {

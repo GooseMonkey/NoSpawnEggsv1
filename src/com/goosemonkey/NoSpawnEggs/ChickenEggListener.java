@@ -14,7 +14,7 @@ import com.goosemonkey.NoSpawnEggs.config.Property;
 
 public class ChickenEggListener implements Listener
 {
-	NoSpawnEggs plugin;
+	private NoSpawnEggs plugin;
 	
 	public ChickenEggListener(NoSpawnEggs inst)
 	{
@@ -70,5 +70,10 @@ public class ChickenEggListener implements Listener
 		{
 			e.setItem(new ItemStack(Material.SNOW_BALL));
 		}
+	}
+	
+	public NoSpawnEggs getPlugin()
+	{
+		return this.plugin;
 	}
 }
