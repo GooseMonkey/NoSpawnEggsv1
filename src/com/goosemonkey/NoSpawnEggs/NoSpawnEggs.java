@@ -14,6 +14,7 @@ import com.goosemonkey.NoSpawnEggs.config.Config;
 import com.goosemonkey.NoSpawnEggs.config.ConfigObject;
 import com.goosemonkey.NoSpawnEggs.config.CustomNames;
 import com.goosemonkey.NoSpawnEggs.config.Names;
+import com.goosemonkey.NoSpawnEggs.config.Property;
 
 public class NoSpawnEggs extends JavaPlugin {
 
@@ -33,9 +34,12 @@ public class NoSpawnEggs extends JavaPlugin {
 		PlayerEggThrowListener petl = new PlayerEggThrowListener(this);
 		this.getServer().getPluginManager().registerEvents(petl, this);
 		
-//		PlayerPumpkinListener ppl = new PlayerPumpkinListener(this);
-//		this.getServer().getPluginManager().registerEvents(ppl, this);
-		
+		if (Config.getBoolean(Property.BLOCK_SNOW_GOLEMS))
+		{
+			PlayerPumpkinListener ppl = new PlayerPumpkinListener();
+			this.getServer().getPluginManager().registerEvents(ppl, this);
+		}
+			
 		ChickenEggListener cel = new ChickenEggListener(this);
 		this.getServer().getPluginManager().registerEvents(cel, this);
 		

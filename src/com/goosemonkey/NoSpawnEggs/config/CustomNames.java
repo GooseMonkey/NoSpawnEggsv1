@@ -54,7 +54,7 @@ public class CustomNames
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            //nada
         }
     }
 	
@@ -66,7 +66,7 @@ public class CustomNames
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            //nada
         }
     }
 	
