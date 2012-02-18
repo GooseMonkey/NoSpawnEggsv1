@@ -1,0 +1,29 @@
+allowAllSpawns:
+    monster: false
+    animal: false
+    npc: false
+    unknown: false
+    perWorld:
+        ExampleWorld:
+            animal: true
+            npc: true
+            allowedIds:
+            - 70
+            blockedIds:
+            - 51
+snowGolemBlocking:
+    enable: true
+    onlyCreative: true
+    ignoredWorlds:
+    - ExampleWorld
+chickenEggBlocking:
+    eggThrowBlocking:
+        enable: true
+        onlyCreative: true
+        sendMessage: true
+        ignoredWorlds:
+        - ExampleWorld
+    dispenseBlocking:
+        enable: true
+        ignoredWorlds:
+        - ExampleWorld

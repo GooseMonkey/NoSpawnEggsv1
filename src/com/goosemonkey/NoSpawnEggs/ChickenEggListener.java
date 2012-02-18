@@ -8,48 +8,61 @@ import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.goosemonkey.NoSpawnEggs.config.Config;
-import com.goosemonkey.NoSpawnEggs.config.Names;
-import com.goosemonkey.NoSpawnEggs.config.Property;
-
 public class ChickenEggListener implements Listener
 {
-	private NoSpawnEggs plugin;
-	
-	public ChickenEggListener(NoSpawnEggs inst)
-	{
-		plugin = inst;
-	}
-	
 	@EventHandler
 	public void onPlayerEggThrow(PlayerEggThrowEvent e)
 	{
-		if (!Config.getBoolean(Property.ENABLE_CHICKEN_EGG_BLOCKING) ||
-				e.getPlayer().hasPermission("nospawneggs.chickenegg.*"))
+		if (!NoSpawnEggs.getMainConfig().getBoolean("chickenEggBlocking.eggThrowBlocking.enable", true))
 		{
 			return;
 		}
 		
-		GameMode gm = e.getPlayer().getGameMode();
-		
-		if (gm != null)
+		if (e.getPlayer().hasPermission("nospawneggs.chickenegg.*"))
 		{
-			if (gm == GameMode.CREATIVE &&
-					e.getPlayer().hasPermission("nospawneggs.chickenegg.creative"))
+			return;
+		}
+		
+		try
+		{		
+			if (NoSpawnEggs.getMainConfig().getList("chickenEggBlocking.eggThrowBlocking.ignoredWorlds").
+					contains(e.getPlayer().getWorld().getName()))
 			{
 				return;
 			}
-			
-			if (gm == GameMode.SURVIVAL &&
-					e.getPlayer().hasPermission("nospawneggs.chickenegg.survival"))
+		}
+		catch (NullPointerException exc)
+		{
+			//if the list doesn't exist
+			//nada
+		}
+		
+		if (e.getPlayer().getGameMode() == GameMode.CREATIVE)
+		{
+			if (e.getPlayer().hasPermission("nospawneggs.chickenegg.creative"))
 			{
 				return;
 			}
 		}
 		
-		if (Config.getBoolean(Property.CHICKEN_EGG_MESSAGE))
+		if (e.getPlayer().getGameMode() == GameMode.SURVIVAL)
 		{
-			e.getPlayer().sendMessage("§e"+Config.getName(Names.NO_CHICKEN_EGG_PERM));
+			if (e.getPlayer().hasPermission("nospawneggs.chickenegg.survival"))
+			{
+				return;
+			}
+			
+			if (NoSpawnEggs.getMainConfig().getBoolean("chickenEggBlocking.eggThrowBlocking.onlyCreative", true))
+			{
+				return;
+			}
+		}
+		
+		if (NoSpawnEggs.getMainConfig().getBoolean("chickenEggBlocking.eggThrowBlocking.sendMessage", true))
+		{
+			e.getPlayer().sendMessage("§e" + NoSpawnEggs.getLocaleConfig().getString
+					("noChickenEggPerms",
+							"You don't have permission to spawn Chickens from eggs."));
 		}
 		
 		e.setHatching(false);
@@ -59,21 +72,33 @@ public class ChickenEggListener implements Listener
 	@EventHandler
 	public void onDispense(BlockDispenseEvent e)
 	{
-		if (e.getItem() == null || !Config.getBoolean(Property.BLOCK_DISPENSER_CHICKEN_SPAWN))
+		if (e.getItem() == null || !NoSpawnEggs.getMainConfig().getBoolean(
+				"chickenEggBlocking.dispenseBlocking.enable"))
 		{
 			return;
+		}
+		
+		try
+		{		
+			if (NoSpawnEggs.getMainConfig().getList("chickenEggBlocking.dispenseBlocking.ignoredWorlds").
+					contains(e.getBlock().getWorld().getName()))
+			{
+				return;
+			}
+		}
+		catch (NullPointerException exc)
+		{
+			//if the list doesn't exist
+			//nada
 		}
 		
 		ItemStack item = e.getItem();
 		
 		if (item.getType() == Material.EGG)
 		{
+			//Turn the egg into a snow ball so it still fires/hits things but
+			//doesn't spawn chickens
 			e.setItem(new ItemStack(Material.SNOW_BALL));
 		}
-	}
-	
-	public NoSpawnEggs getPlugin()
-	{
-		return this.plugin;
 	}
 }

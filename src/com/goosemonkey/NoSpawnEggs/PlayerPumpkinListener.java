@@ -7,9 +7,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import com.goosemonkey.NoSpawnEggs.config.Config;
-import com.goosemonkey.NoSpawnEggs.config.Names;
-import com.goosemonkey.NoSpawnEggs.config.Property;
 
 public class PlayerPumpkinListener implements Listener
 {
@@ -24,9 +21,22 @@ public class PlayerPumpkinListener implements Listener
 		if (e.getBlockPlaced().getType().equals(Material.PUMPKIN)|| e.getBlockPlaced().getType().equals(Material.JACK_O_LANTERN))
 		{
 			if (e.getPlayer().hasPermission("nospawneggs.snowgolem.*")||
-					!Config.getBoolean(Property.BLOCK_SNOW_GOLEMS))
+					!NoSpawnEggs.getMainConfig().getBoolean("snowGolemBlocking.enable", true))
 			{
 				return;
+			}
+			
+			try
+			{
+				if (NoSpawnEggs.getMainConfig().getList("snowGolemBlocking.ignoredWorlds").contains(
+						e.getPlayer().getWorld().getName()))
+				{
+					return;
+				}
+			}
+			catch (NullPointerException exc)
+			{
+				//list dont exist
 			}
 			
 			GameMode playerGM = e.getPlayer().getGameMode();
@@ -43,7 +53,7 @@ public class PlayerPumpkinListener implements Listener
 				
 				if (playerGM.equals(GameMode.SURVIVAL))
 				{
-					if (Config.getBoolean(Property.GOLEM_BLOCK_ONLY_CREATIVE))
+					if (NoSpawnEggs.getMainConfig().getBoolean("snowGolemBlocking.onlyCreative", true))
 					{
 						return;
 					}
@@ -61,7 +71,9 @@ public class PlayerPumpkinListener implements Listener
 				&& loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY()-2, loc.getBlockZ()).getType().equals(Material.SNOW_BLOCK))
 			{
 				e.setCancelled(true);
-				e.getPlayer().sendMessage("§e"+Config.getName(Names.NO_GOLEM_PERM));
+				e.getPlayer().sendMessage("§e" + NoSpawnEggs.getLocaleConfig().getString
+						("noSnowGolemPerms", 
+								"You don't have permission to create Snow Golems."));
 			}
 		}
 	}

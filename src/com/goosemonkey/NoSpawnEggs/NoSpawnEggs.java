@@ -1,97 +1,83 @@
 package com.goosemonkey.NoSpawnEggs;
 
-import java.io.File;
-import java.util.logging.Logger;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.goosemonkey.NoSpawnEggs.config.Config;
-import com.goosemonkey.NoSpawnEggs.config.ConfigObject;
-import com.goosemonkey.NoSpawnEggs.config.CustomNames;
-import com.goosemonkey.NoSpawnEggs.config.Names;
-import com.goosemonkey.NoSpawnEggs.config.Property;
+import com.goosemonkey.NoSpawnEggs.NewConfig.*;
 
-public class NoSpawnEggs extends JavaPlugin {
-
-	private PluginDescriptionFile pdf;
-	private Logger log;
-	private CustomNames customNames;
+public class NoSpawnEggs extends JavaPlugin
+{
+	//Config files:
+	private static Main mainConfig;
+	private static Locale localeConfig;
 	
 	public void onEnable() 
 	{		
-		//initialize vars
-		pdf = this.getDescription();
-		log = this.getServer().getLogger();
-		customNames = new CustomNames(this);
+		//Prepare YMLs
+		mainConfig = new Main(this);
+		localeConfig = new Locale(this);
 		
-		Config.setup(new ConfigObject());
+		//Regiseter Listeners
+		this.getServer().getPluginManager().registerEvents(new PlayerEggThrowListener(), this);
+		this.getServer().getPluginManager().registerEvents(new PlayerPumpkinListener(), this);
+		this.getServer().getPluginManager().registerEvents(new ChickenEggListener(), this);
 		
-		PlayerEggThrowListener petl = new PlayerEggThrowListener(this);
-		this.getServer().getPluginManager().registerEvents(petl, this);
-		
-		if (Config.getBoolean(Property.BLOCK_SNOW_GOLEMS))
-		{
-			PlayerPumpkinListener ppl = new PlayerPumpkinListener();
-			this.getServer().getPluginManager().registerEvents(ppl, this);
-		}
-			
-		ChickenEggListener cel = new ChickenEggListener(this);
-		this.getServer().getPluginManager().registerEvents(cel, this);
-		
-		log.info("NoSpawnEggs v"+pdf.getVersion()+" enabled!");
+		//Ready!
+		this.getLogger().info("NoSpawnEggs v"+this.getDescription().getVersion()+" enabled!");
 	}
 
 	public void onDisable()
 	{
-		log.info("NoSpawnEggs v"+pdf.getVersion()+" disabled.");
+		this.getLogger().info("NoSpawnEggs v"+this.getDescription().getVersion()+" disabled.");
 	}
 	
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
 	{
-		if (sender instanceof ConsoleCommandSender)
+		if (args.length != 1)
 		{
-			Config.setup(new ConfigObject());
-			this.customNames.loadYamls();
-			sender.sendMessage(Config.getName(Names.RELOADED));
+			sender.sendMessage("§eNoSpawnEggs version " + this.getDescription().getVersion());
+			
 			return true;
 		}
 		
-		Player player = null;
+		String arg = args[0];
 		
-		try
-		{
-			player = (Player) sender;
-		}
-		catch (Exception e)
+		if (arg == null)
 		{
 			return false;
 		}
 		
-		if (player.hasPermission("nospawneggs.reload") || player.isOp())
+		if (arg.equalsIgnoreCase("reload"))
 		{
-			Config.setup(new ConfigObject());
-			player.sendMessage(Config.getName(Names.RELOADED));
+			if (sender.hasPermission("nospawneggs.reload") || sender.isOp() || sender instanceof ConsoleCommandSender){
+				localeConfig.reload();
+				mainConfig.reload();
+				
+				sender.sendMessage("§e" + NoSpawnEggs.getLocaleConfig().getString("reloadedMessage", 
+						"§eNoSpawnEggs config reloaded."));
+			}
+			else
+			{
+				sender.sendMessage("§e" + NoSpawnEggs.getLocaleConfig().getString("noReloadPerms", 
+						"§eNoSpawnEggs config reloaded."));
+			}
+			
 			return true;
 		}
-		else
-		{
-			player.sendMessage(Config.getName(Names.NO_RELOAD_PERM));
-			return true;
-		}
+		
+		return false;
 	}
 	
-	public CustomNames getCustomNames()
+	public static FileConfiguration getMainConfig()
 	{
-		return this.customNames;
+		return mainConfig.getConfig();
 	}
 	
-	public static File getPluginDirectory()
+	public static FileConfiguration getLocaleConfig()
 	{
-		return new File("plugins/NoSpawnEggs");
+		return localeConfig.getConfig();
 	}
 }

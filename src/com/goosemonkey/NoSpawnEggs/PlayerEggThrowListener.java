@@ -1,154 +1,300 @@
 package com.goosemonkey.NoSpawnEggs;
 
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import com.goosemonkey.NoSpawnEggs.config.Config;
-import com.goosemonkey.NoSpawnEggs.config.Names;
-import com.goosemonkey.NoSpawnEggs.config.Property;
-
 public class PlayerEggThrowListener implements Listener
 {
-	private NoSpawnEggs plugin;
-	
-	public PlayerEggThrowListener(NoSpawnEggs instance)
-	{
-		plugin = instance;
-	}
-
 	@EventHandler
-	public void onPlayerInteract(PlayerInteractEvent e)
+	public void onPlayerInteract(PlayerInteractEvent event)
 	{
-		if (e.getAction() != Action.RIGHT_CLICK_BLOCK &&
-				e.getAction() != Action.RIGHT_CLICK_AIR)
+		//Check if they were actually spawning a mob with an egg
+		if (event.getAction() == Action.RIGHT_CLICK_AIR ||
+				event.getAction() == Action.RIGHT_CLICK_BLOCK )
+		{
+			if (event.getPlayer().getItemInHand().getTypeId() == 383)
+			{
+				this.onPlayerSpawnerEgg(event);
+			}
+		}
+	}
+	
+	private void onPlayerSpawnerEgg(PlayerInteractEvent event)
+	{
+		//If they have all perms or are an op, return now.
+		if (event.getPlayer().hasPermission("nospawneggs.*") ||
+				event.getPlayer().isOp())
 		{
 			return;
 		}
 		
-		if (e.getPlayer().getItemInHand().getTypeId() == 383)
+		PlayerSpawnerEggEvent pseEvent = new PlayerSpawnerEggEvent(event);
+		
+		if (!canPlayerUseEgg(pseEvent))
 		{
-			if (e.getPlayer().hasPermission("nospawneggs.*"))
+			event.setCancelled(true);
+			
+			event.getPlayer().sendMessage(String.format("§e" + NoSpawnEggs.getLocaleConfig().getString(
+					"noSpawnerEggPerms",
+					"You don't have permission to spawn this %s."),
+					"§3" + pseEvent.getEntityBreed().getProperName() + "§e"));
+		}
+	}
+	
+	public boolean canPlayerUseEgg(PlayerSpawnerEggEvent event)
+	{
+		//First, make sure that that entity's blocking is on.
+		if (event.getPlayer().hasPermission("nospawneggs.*"))
+		{
+			return true;
+		}
+		
+		//Then, check per-world stuff
+		if (this.isAllSpawningAllowedInWorld(event.getEntityBreed().getCategory(),
+				event.getEntityId(), event.getPlayer().getWorld()))
+		{
+			return true;
+		}
+		
+		//Next comes checking permissions on the player for known entities.
+		if (event.getEntityBreed().getCategory() != EntityCategory.UNKNOWN)
+		{
+			if (event.getPlayer().hasPermission("nospawneggs." +
+					event.getEntityBreed().getCategory().name().toLowerCase() +
+					event.getEntityBreed().getPermName()))
 			{
-				//Do nothing
-				return;
+				return true;
 			}
+		}
+		//Then, check for unknown entities.
+		else
+		{
+			if (event.getPlayer().hasPermission("nospawneggs.id." +
+					event.getEntityId()))
+			{
+				return true;
+			}
+		}
+		
+		//At this point, it is assumed to block the egg event...
+		
+		return false;
+	}
+	
+	public boolean isAllSpawningAllowedInWorld(EntityCategory cat, int id, World world)
+	{
+		//If the category is set for per-world, use that.
+		if (NoSpawnEggs.getMainConfig().isSet("allowAllSpawns.perWorld." +
+				world.getName() + "." + cat.name().toLowerCase()))
+		{
+			if (NoSpawnEggs.getMainConfig().getBoolean("allowAllSpawns.perWorld." +
+				world.getName() + "." + cat.name().toLowerCase()) == true )
+			{
+				//If that world allows that category, check the block list first
+				if (NoSpawnEggs.getMainConfig().getList("allowAllSpawns.perWorld." +
+						world.getName() + ".blockedIds").contains(id))
+				{
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+			else
+			{
+				//If that world does NOT allow that category, check the allow list
+				if (NoSpawnEggs.getMainConfig().getList("allowAllSpawns.perWorld." +
+						world.getName() + ".allowedIds").contains(id))
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		else
+		//If it's not set for per-world, go to global.
+		{
+			if (NoSpawnEggs.getMainConfig().getBoolean("allowAllSpawns." + 
+					cat.name().toLowerCase()))
+			{
+				//If it's globally allowed, make sure it's not blocked for that world in ID first.
+				try
+				{
+					if (NoSpawnEggs.getMainConfig().getList("allowAllSpawns.perWorld." +
+							world.getName() + ".blockedIds").contains(id))
+					{
+						return false;
+					}
+					else
+					{
+						return true;
+					}
+				}
+				catch (NullPointerException exc)
+				{
+					return true;
+				}
+			}
+			else
+			{
+				//If it's NOT globally allowed, check for exceptions in allowed ID list
+				try
+				{
+					if (NoSpawnEggs.getMainConfig().getList("allowAllSpawns.perWorld." +
+							world.getName() +
+							".allowedIds").contains(id))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+				catch (NullPointerException exc)
+				{
+					return false;
+				}
+			}
+		}
+	}
+	
+	public class PlayerSpawnerEggEvent
+	{
+		private Player player = null;
+		private PlayerInteractEvent event = null;
+		private int eggMeta;
+		private EntityType breed = null;
+		
+		PlayerSpawnerEggEvent(PlayerInteractEvent event)
+		{
+			this.player = event.getPlayer();
 			
-			int eggMeta = e.getPlayer().getItemInHand().getDurability();
+			this.event = event;
 			
-			EntityType type = null;
+			this.eggMeta = event.getPlayer().getItemInHand().getDurability();
 			
 			switch (eggMeta)
 			{
-			case 50: type = EntityType.CREEPER; break;
-			case 51: type = EntityType.SKELETON; break;
-			case 52: type = EntityType.SPIDER; break;
-			case 54: type = EntityType.ZOMBIE; break;
-			case 55: type = EntityType.SLIME; break;
-			case 56: type = EntityType.GHAST; break;
-			case 57: type = EntityType.PIGZOMBIE; break;
-			case 58: type = EntityType.ENDERMAN; break;
-			case 59: type = EntityType.CAVESPIDER; break;
-			case 60: type = EntityType.SILVERFISH; break;
-			case 61: type = EntityType.BLAZE; break;
-			case 62: type = EntityType.MAGMACUBE; break;
-			case 90: type = EntityType.PIG; break;
-			case 91: type = EntityType.SHEEP; break;
-			case 92: type = EntityType.COW; break;
-			case 93: type = EntityType.CHICKEN; break;
-			case 94: type = EntityType.SQUID; break;
-			case 95: type = EntityType.WOLF; break;
-			case 96: type = EntityType.MOOSHROOM; break;
-			case 120: type = EntityType.VILLAGER; break;
+			case 50: breed = EntityType.CREEPER; break;
+			case 51: breed = EntityType.SKELETON; break;
+			case 52: breed = EntityType.SPIDER; break;
+			case 54: breed = EntityType.ZOMBIE; break;
+			case 55: breed = EntityType.SLIME; break;
+			case 56: breed = EntityType.GHAST; break;
+			case 57: breed = EntityType.PIGZOMBIE; break;
+			case 58: breed = EntityType.ENDERMAN; break;
+			case 59: breed = EntityType.CAVESPIDER; break;
+			case 60: breed = EntityType.SILVERFISH; break;
+			case 61: breed = EntityType.BLAZE; break;
+			case 62: breed = EntityType.MAGMACUBE; break;
+			case 90: breed = EntityType.PIG; break;
+			case 91: breed = EntityType.SHEEP; break;
+			case 92: breed = EntityType.COW; break;
+			case 93: breed = EntityType.CHICKEN; break;
+			case 94: breed = EntityType.SQUID; break;
+			case 95: breed = EntityType.WOLF; break;
+			case 96: breed = EntityType.MOOSHROOM; break;
+			case 120: breed = EntityType.VILLAGER; break;
 			
-			default: type = EntityType.MISSINGNO;
+			default: breed = null;
 			}
-			
-			String properName = "Entity";
-			
-			try
+		}
+		
+		public Player getPlayer()
+		{
+			return player;
+		}
+		
+		public PlayerInteractEvent getInteractEvent()
+		{
+			return event;
+		}
+		
+		public int getEntityId()
+		{
+			return eggMeta;
+		}
+		
+		public EntityType getEntityBreed()
+		{
+			if (breed != null)
 			{
-				properName = Config.getName(Names.valueOf("EID"+eggMeta));
+				return breed;
 			}
-			catch (IllegalArgumentException ex)
+			else
 			{
-				//Nothing
+				return EntityType.UNKNOWN;
 			}
-			
-			if (type == EntityType.CREEPER || type == EntityType.SKELETON ||
-				type == EntityType.SPIDER || type == EntityType.ZOMBIE ||
-				type == EntityType.SLIME || type == EntityType.GHAST ||
-				type == EntityType.PIGZOMBIE || type == EntityType.ENDERMAN ||
-				type == EntityType.CAVESPIDER || type == EntityType.SILVERFISH ||
-				type == EntityType.BLAZE || type == EntityType.MAGMACUBE)			
-			{
-				if (Config.getBoolean(Property.ALLOW_ALL_MONSTER_SPAWNS) ||
-						e.getPlayer().hasPermission("nospawneggs.monster."+type))
-				{
-					return;
-				}
-				else
-				{
-					e.setCancelled(true);
-					e.getPlayer().sendMessage(String.format("§e"+Config.getName(Names.NO_EGG_PERM), "§3"+properName+"§e"));
-					return;
-				}
-			}
-			
-			if (type == EntityType.PIG || type == EntityType.SHEEP ||
-				type == EntityType.COW || type == EntityType.CHICKEN ||
-				type == EntityType.SQUID || type == EntityType.WOLF ||
-				type == EntityType.MOOSHROOM )
-			{
-				if (Config.getBoolean(Property.ALLOW_ALL_ANIMAL_SPAWNS) ||
-						e.getPlayer().hasPermission("nospawneggs.animal."+type))
-				{
-					return;
-				}
-				else
-				{
-					e.setCancelled(true);
-					e.getPlayer().sendMessage(String.format("§e"+Config.getName(Names.NO_EGG_PERM), "§3"+properName+"§e"));
-					return;
-				}
-			}
-			
-			if (type == EntityType.VILLAGER)
-			{
-				if (Config.getBoolean(Property.ALLOW_ALL_NPC_SPAWNS) ||
-						e.getPlayer().hasPermission("nospawneggs.npc."+type))
-				{
-					return;
-				}
-				else
-				{
-					e.setCancelled(true);
-					e.getPlayer().sendMessage(String.format("§e"+Config.getName(Names.NO_EGG_PERM), "§3"+properName+"§e"));
-					return;
-				}
-			}
-			
-			//Unknown mobs, handling by id
-			if (e.getPlayer().hasPermission("nospawneggs.unknown")||
-				(Config.getBoolean(Property.ALLOW_ALL_UNKNOWN_SPAWNS)))
-			{
-				return;
-			}
-			
-			if (e.getPlayer().hasPermission("nospawneggs.id."+eggMeta))
-			{
-				return;
-			}
-			
-			e.setCancelled(true);
-			
-			String unknownName;
-			
-			unknownName = plugin.getCustomNames().getCustomNames().getString(String.valueOf(eggMeta), "Entity");
-			
-			e.getPlayer().sendMessage(String.format("§e"+Config.getName(Names.NO_EGG_PERM),
-				"§3"+unknownName+"§e"));
+		}
+	}
+	
+	public enum EntityCategory
+	{
+		ANIMAL, MONSTER, NPC, UNKNOWN
+	}
+	
+	public enum EntityType {
+
+		CREEPER(50, EntityCategory.MONSTER),
+		SKELETON(51, EntityCategory.MONSTER),
+		SPIDER(52, EntityCategory.MONSTER),
+		ZOMBIE(54, EntityCategory.MONSTER),
+		SLIME(55, EntityCategory.MONSTER),
+		GHAST(56, EntityCategory.MONSTER),
+		PIGZOMBIE(57, EntityCategory.MONSTER),
+		ENDERMAN(58, EntityCategory.MONSTER),
+		CAVESPIDER(59, EntityCategory.MONSTER),
+		SILVERFISH(60, EntityCategory.MONSTER),
+		BLAZE(61, EntityCategory.MONSTER),
+		MAGMACUBE(62, EntityCategory.MONSTER),
+		PIG(90, EntityCategory.ANIMAL),
+		SHEEP(91, EntityCategory.ANIMAL),
+		COW(92, EntityCategory.ANIMAL),
+		CHICKEN(93, EntityCategory.ANIMAL),
+		SQUID(94, EntityCategory.ANIMAL),
+		WOLF(95, EntityCategory.ANIMAL),
+		MOOSHROOM(96, EntityCategory.ANIMAL),
+		VILLAGER(120, EntityCategory.NPC),
+		UNKNOWN(0, EntityCategory.UNKNOWN);
+		
+		int Id = 0;
+		EntityCategory cat = EntityCategory.UNKNOWN;
+		
+		EntityType(int eId, EntityCategory cat)
+		{
+			Id = eId;
+			this.cat = cat;
+		}
+		
+		public String getPermName()
+		{
+			return this.name().toLowerCase();
+		}
+		
+		public EntityCategory getCategory()
+		{
+			return this.cat;
+		}
+		
+		public int getId()
+		{
+			return Id;
+		}
+		
+		public String getProperName()
+		{
+			return NoSpawnEggs.getLocaleConfig().getString(
+					"entity.EID" + this.getId(), NoSpawnEggs.getLocaleConfig().getString(
+							"entity.0", "Entity"));
 		}
 	}
 }

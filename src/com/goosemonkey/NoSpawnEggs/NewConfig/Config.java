@@ -1,0 +1,74 @@
+package com.goosemonkey.NoSpawnEggs.NewConfig;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public abstract class Config
+{
+	private FileConfiguration config = null;
+	private File configFile = null;
+
+	private JavaPlugin plugin;
+	
+	private String fileName;
+	
+	public Config(JavaPlugin inst, String fileName)
+	{
+		plugin = inst;
+		this.fileName = fileName;
+		
+		this.reload();
+		
+		this.setDefaultValues();
+		
+		this.getConfig().options().header(this.getHeader());
+		
+		try
+		{
+			this.getConfig().save(configFile);
+		}
+		catch (IOException e)
+		{
+			plugin.getLogger().severe("Could not save config!");
+		}
+	}
+	
+	public void reload()
+	{
+	    if (configFile == null)
+	    {
+	    	configFile = new File(plugin.getDataFolder(), fileName);
+	    }
+	    
+	    config = YamlConfiguration.loadConfiguration(configFile);
+	 
+	    // Look for defaults in the jar
+	    InputStream defConfigStream = plugin.getResource(fileName);
+	    
+	    if (defConfigStream != null)
+	    {
+	        YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+	        
+	        config.setDefaults(defConfig);
+	    }
+	}
+	
+	public FileConfiguration getConfig()
+	{
+	    if (config == null)
+	    {
+	        reload();
+	    }
+	    
+	    return config;
+	}
+	
+	public abstract String getHeader();
+	
+	public abstract void setDefaultValues();
+}
