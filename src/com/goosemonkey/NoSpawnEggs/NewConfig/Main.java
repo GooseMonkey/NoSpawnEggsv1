@@ -2,7 +2,6 @@ package com.goosemonkey.NoSpawnEggs.NewConfig;
 
 import java.util.Arrays;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Main extends Config
@@ -70,15 +69,5 @@ public class Main extends Config
 //		checkSet("timer.spawnerEggs", 30);
 //		checkSet("timer.snowGolems", -1);
 //		checkSet("timer.chickenEggs", 10);
-	}
-	
-	public void checkSet(String path, Object def)
-	{
-		FileConfiguration f = this.getConfig();
-		
-		if (!f.isSet(path))
-		{
-			f.set(path, def);
-		}
 	}
 }

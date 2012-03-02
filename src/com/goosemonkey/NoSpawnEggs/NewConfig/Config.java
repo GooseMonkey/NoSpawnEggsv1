@@ -68,6 +68,16 @@ public abstract class Config
 	    return config;
 	}
 	
+	public void checkSet(String path, Object def)
+	{
+		FileConfiguration f = this.getConfig();
+		
+		if (!f.isSet(path))
+		{
+			f.set(path, def);
+		}
+	}
+	
 	public abstract String getHeader();
 	
 	public abstract void setDefaultValues();
