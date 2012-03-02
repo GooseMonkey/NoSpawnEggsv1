@@ -37,7 +37,10 @@ public class Main extends Config
 				"to only trigger on people in creative mode. Should it send a message to players when\n" +
 				"denied a chicken egg spawn? Worlds in ignoredWorlds will not be affected.\n\n" +
 				"chickenEggBlocking.dispenseBlocking: Prevents a way to overcome chicken egg\n" +
-				"throw blocking by disallowing dispensers to spawn chickens in certain worlds.\n" +
+				"throw blocking by disallowing dispensers to spawn chickens in certain worlds.\n\n" +
+				"timer: Allow users to override the blocking once every x seconds, defined here.\n" +
+				"A user must have the permission nospawneggs.timer.[egg/golem/chickenegg] for the timer\n" +
+				"to apply to them. If a timer is to be disabled, set the time to -1." +
 				"";
 	}
 	
@@ -63,6 +66,9 @@ public class Main extends Config
 		checkSet("chickenEggBlocking.dispenseBlocking.enable", true);
 		checkSet("chickenEggBlocking.dispenseBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 
+		checkSet("timer.spawnerEggs", 30);
+		checkSet("timer.snowGolems", -1);
+		checkSet("timer.chickenEggs", 10);
 	}
 	
 	public void checkSet(String path, Object def)

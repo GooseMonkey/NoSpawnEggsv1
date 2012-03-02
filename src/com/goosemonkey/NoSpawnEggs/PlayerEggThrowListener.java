@@ -38,10 +38,19 @@ public class PlayerEggThrowListener implements Listener
 		{
 			event.setCancelled(true);
 			
-			event.getPlayer().sendMessage(String.format("§e" + NoSpawnEggs.getLocaleConfig().getString(
-					"noSpawnerEggPerms",
-					"You don't have permission to spawn this %s."),
-					"§3" + pseEvent.getEntityBreed().getProperName() + "§e"));
+			if (!pseEvent.isCancelledBecauseOfTimer())
+			{
+				event.getPlayer().sendMessage(String.format("§e" + NoSpawnEggs.getLocaleConfig().getString(
+						"noSpawnerEggPerms",
+						"You don't have permission to spawn this %s."),
+						"§3" + pseEvent.getEntityBreed().getProperName() + "§e"));
+			}
+			else
+			{
+				event.getPlayer().sendMessage("§e" + NoSpawnEggs.getLocaleConfig().getString(
+						"timerMessage",
+						"You have to wait a while before you can do this again."));
+			}
 		}
 	}
 	
@@ -80,9 +89,52 @@ public class PlayerEggThrowListener implements Listener
 			}
 		}
 		
-		//At this point, it is assumed to block the egg event...
+		/* 
+		 * NoSpawnEggs - Beginning to implement timer. It is completely nonfunctional currently,
+		 * I'll come back to it.
+		 *
 		
-		return false;
+		//If they don't have permission yet, check Timer to see if it's time.
+		
+		if (!event.getPlayer().hasPermission("nospawneggs.timer.egg"))
+		{
+			// There hasn't been a return yet, and they can't use timer, so block.
+			return false;
+		}
+		
+		// If they haven't used a spawn egg yet this session, set that they have and end.
+		if (Timer.getLastSpawnEgg(event.getPlayer()) == -1)
+		{
+			Timer.chickenEggUse(event.getPlayer());
+			
+			return true;
+		}
+		
+		long longSinceLast = Calendar.getInstance().getTimeInMillis() -
+				Timer.getLastSpawnEgg(event.getPlayer());
+		
+		int secsBetweenSpawns = NoSpawnEggs.getMainConfig().getInt("timer.spawnerEggs", 30);
+		
+		int secsSinceLast = (int) (longSinceLast / 1000);
+		
+		if (secsSinceLast < secsBetweenSpawns)
+		{
+			event.cancelledByTimer();
+			
+			return false;
+		}
+		else
+		{
+			Timer.chickenEggUse(event.getPlayer());
+			
+			return true;
+		}
+		
+		*/
+		
+		// At this point, assume to block.
+		return false;		
+		
 	}
 	
 	public boolean isAllSpawningAllowedInWorld(EntityCategory cat, int id, World world)
@@ -173,6 +225,7 @@ public class PlayerEggThrowListener implements Listener
 		private PlayerInteractEvent event = null;
 		private int eggMeta;
 		private EntityType breed = null;
+		private boolean timerCancelled = false;
 		
 		PlayerSpawnerEggEvent(PlayerInteractEvent event)
 		{
@@ -234,6 +287,16 @@ public class PlayerEggThrowListener implements Listener
 			{
 				return EntityType.UNKNOWN;
 			}
+		}
+		
+		public boolean isCancelledBecauseOfTimer()
+		{
+			return this.timerCancelled;
+		}
+		
+		public void cancelledByTimer()
+		{
+			this.timerCancelled = true;
 		}
 	}
 	
