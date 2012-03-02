@@ -25,18 +25,30 @@ public class Main extends Config
 				"allowAllSpawns: For animal, monster, and npc options, this can disable the spawner\n" +
 				"egg blocking of a certain type of entity. For unknown, this disables the blocking\n" +
 				"of spawning Entities unknown to the plugin (not recommended).\n\n" +
+				
 				"allowAllSpawns.perWorld: Set per-world configurations here, just as the model, \n" +
 				"replacing the \"ExampleWorld\" with whatever the world is named. Per-world configuration\n" +
 				"overrides global configuration. Blocked and Allowed IDs override all per-world and global\n" +
 				"configuration. Get entity IDs on the wiki. If you have any questions on how to accomplish\n" +
 				"something, post a comment on the BukkitDev page.\n\n" +
-				"snowGolemBlocking: Enables the blocking of Snow Golems. Worlds in \"ignoredWorlds\"\n" +
+				
+				"snowGolemBlocking/ironGolemBlocking: Enables the blocking of Snow/Iron Golems. Worlds in \"ignoredWorlds\"\n" +
 				"will not be affected by this.\n\n" +
+				
 				"chickenEggBlocking.eggThrowBlocking: Blocks people from spam-spawning chickens. Can be set\n" +
 				"to only trigger on people in creative mode. Should it send a message to players when\n" +
 				"denied a chicken egg spawn? Worlds in ignoredWorlds will not be affected.\n\n" +
 				"chickenEggBlocking.dispenseBlocking: Prevents a way to overcome chicken egg\n" +
 				"throw blocking by disallowing dispensers to spawn chickens in certain worlds.\n\n" +
+				
+				"spawnEggDispenseBlocking: Prevents players from using dispensers to spawn mobs (Added\n" +
+				"MC 1.2). Worlds on ignoredWorlds will not be affected.\n\n" +
+				
+				"expBottleBlocking: Prevents players from being able to throw Bottles of Enchanting.\n" +
+				"As of MC 1.2, experience isn't required to enchant in creative, so this won't effect enchanting much.\n\n" +
+				
+				"fireChargeDispenseBlocking: Prevents dispensers from shooting fire charges (Added MC\n" +
+				"1.2), to combat griefing and lag." +
 				
 //				"timer: Allow users to override the blocking once every x seconds, defined here.\n" +
 //				"A user must have the permission nospawneggs.timer.[egg/golem/chickenegg] for the timer\n" +
@@ -76,6 +88,9 @@ public class Main extends Config
 		checkSet("expBottleBlocking.enable", true);
 		checkSet("expBottleBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 		checkSet("expBottleBlocking.onlyCreative", true);
+		
+		checkSet("fireChargeDispenseBlocking.enable", true);
+		checkSet("fireChargeDispenseBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 		
 //		checkSet("timer.spawnerEggs", 30);
 //		checkSet("timer.snowGolems", -1);

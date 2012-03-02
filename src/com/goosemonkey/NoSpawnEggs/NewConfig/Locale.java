@@ -23,7 +23,8 @@ public class Locale extends Config
 			"reloadedMessage: Sent to a player when successfully reloading the config (/nospawneggs reload)\n" +
 			"noReloadPerms: When the player attempts to reload, but can't.\n" +
 			"noSpawnerEggPerms: When you a player can't spawn a mob via egg. Replace %s with the mob's name.\n" +
-			"noSnowGolemPerms/noChickenEggPerms: It's not that hard to figure out. Is it?\n" ;
+			"noSnowGolemPerms/noIronGolemPerms/noChickenEggPerms/noExpBottlePerms: It's not that hard to figure out. Is it?\n" +
+			"" ;
 			
 //			"timerMessage: When the player needs to wait before doing this action again."
 	}
@@ -114,6 +115,8 @@ public class Locale extends Config
 
 		if (!f.isSet("noChickenEggPerms"))
 		f.set("noChickenEggPerms", "You don't have permission to spawn Chickens from eggs.");
+		
+		checkSet("noExpBottlePerm", "You don't have pemission to spawn Experience Orbs.");
 
 		
 //		if (!f.isSet("timerMessage"))
