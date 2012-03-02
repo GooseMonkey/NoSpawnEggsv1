@@ -19,6 +19,7 @@ entity:
     94: "Squid"
     95: "Wolf"
     96: "Mooshroom"
+    98: "Ocelot"
     120: "Villager"
 reloadedMessage: "NoSpawnEggs config reloaded."
 noReloadPerms: "You don't have permission."

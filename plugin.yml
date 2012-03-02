@@ -1,6 +1,6 @@
 name: NoSpawnEggs
 main: com.goosemonkey.NoSpawnEggs.NoSpawnEggs
-version: 1.4.1a2d1
+version: 1.4.1a2d2
 description: Prevents people without the appropriate permission from spawning mobs with Spawn Eggs.
 author: GooseMonkey97
 website: http://dev.bukkit.org/server-mods/nospawneggs/
@@ -34,6 +34,7 @@ permissions:
             nospawneggs.animal.squid: true
             nospawneggs.animal.wolf: true
             nospawneggs.animal.mooshroom: true
+            nospawneggs.animal.ocelot: true
     nospawneggs.monster.*:
         default: op
         description: Gives access to monster spawning

@@ -256,6 +256,7 @@ public class PlayerEggThrowListener implements Listener
 			case 94: breed = EntityType.SQUID; break;
 			case 95: breed = EntityType.WOLF; break;
 			case 96: breed = EntityType.MOOSHROOM; break;
+			case 98: breed = EntityType.OCELOT; break;
 			case 120: breed = EntityType.VILLAGER; break;
 			
 			default: breed = null;
@@ -326,6 +327,7 @@ public class PlayerEggThrowListener implements Listener
 		SQUID(94, EntityCategory.ANIMAL),
 		WOLF(95, EntityCategory.ANIMAL),
 		MOOSHROOM(96, EntityCategory.ANIMAL),
+		OCELOT(98, EntityCategory.ANIMAL),
 		VILLAGER(120, EntityCategory.NPC),
 		UNKNOWN(0, EntityCategory.UNKNOWN);
 		

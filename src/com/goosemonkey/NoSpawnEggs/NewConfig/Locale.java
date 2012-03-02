@@ -91,6 +91,8 @@ public class Locale extends Config
 
 		if (!f.isSet("entity.EID96"))
 		f.set("entity.EID96", "Mooshroom");
+		
+		checkSet("entity.EID98", "Ocelot");
 
 		if (!f.isSet("entity.EID120"))
 		f.set("entity.EID120", "Villager");
