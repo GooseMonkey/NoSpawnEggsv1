@@ -73,7 +73,7 @@ public class PlayerEggThrowListener implements Listener
 		if (event.getEntityBreed().getCategory() != EntityCategory.UNKNOWN)
 		{
 			if (event.getPlayer().hasPermission("nospawneggs." +
-					event.getEntityBreed().getCategory().name().toLowerCase() +
+					event.getEntityBreed().getCategory().name().toLowerCase() + "." +
 					event.getEntityBreed().getPermName()))
 			{
 				return true;
