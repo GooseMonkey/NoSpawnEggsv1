@@ -32,6 +32,10 @@ chickenEggBlocking:
         enable: true
         ignoredWorlds:
         - ExampleWorld
+spawnEggDispenseBlocking:
+    enable: true
+    ignoredWorlds:
+    - ExampleWorld
 timer:
     spawnerEggs: 30
     snowGolems: -1

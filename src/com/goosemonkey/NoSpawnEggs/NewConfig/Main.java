@@ -69,6 +69,9 @@ public class Main extends Config
 		checkSet("chickenEggBlocking.eggThrowBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 		checkSet("chickenEggBlocking.dispenseBlocking.enable", true);
 		checkSet("chickenEggBlocking.dispenseBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
+		
+		checkSet("spawnEggDispenseBlocking.enable", true);
+		checkSet("spawnEggDispenseBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 
 //		checkSet("timer.spawnerEggs", 30);
 //		checkSet("timer.snowGolems", -1);
