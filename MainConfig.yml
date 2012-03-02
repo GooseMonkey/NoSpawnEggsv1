@@ -36,6 +36,11 @@ spawnEggDispenseBlocking:
     enable: true
     ignoredWorlds:
     - ExampleWorld
+expBottleBlocking:
+    enable: true
+    ignoredWorlds:
+    - ExampleWorld
+    onlyCreative: true
 timer:
     spawnerEggs: 30
     snowGolems: -1
