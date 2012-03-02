@@ -109,6 +109,8 @@ public class Locale extends Config
 
 		if (!f.isSet("noSnowGolemPerms"))
 		f.set("noSnowGolemPerms", "You don't have permission to create Snow Golems.");
+		
+		checkSet("noIronGolemPerms", "You don't have permission to create Iron Golems.");
 
 		if (!f.isSet("noChickenEggPerms"))
 		f.set("noChickenEggPerms", "You don't have permission to spawn Chickens from eggs.");

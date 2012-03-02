@@ -59,6 +59,10 @@ public class Main extends Config
 		checkSet("snowGolemBlocking.onlyCreative", true);
 		checkSet("snowGolemBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 		
+		checkSet("ironGolemBlocking.enable", true);
+		checkSet("ironGolemBlocking.onlyCreative", true);
+		checkSet("ironGolemBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
+		
 		checkSet("chickenEggBlocking.eggThrowBlocking.enable", true);
 		checkSet("chickenEggBlocking.eggThrowBlocking.onlyCreative", true);
 		checkSet("chickenEggBlocking.eggThrowBlocking.sendMessage", true);

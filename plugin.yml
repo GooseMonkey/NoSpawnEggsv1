@@ -1,6 +1,6 @@
 name: NoSpawnEggs
 main: com.goosemonkey.NoSpawnEggs.NoSpawnEggs
-version: 1.4.1a2d2
+version: 1.5a3d1
 description: Prevents people without the appropriate permission from spawning mobs with Spawn Eggs.
 author: GooseMonkey97
 website: http://dev.bukkit.org/server-mods/nospawneggs/
@@ -83,3 +83,16 @@ permissions:
         children:
             nospawneggs.chickenegg.survival: true
             nospawneggs.chickenegg.creative: true
+    nospawneggs.irongolem.*:
+        default: op
+        description: Allows user to create irongolems in creative/survival
+        children:
+            nospawneggs.irongolem.creative: true
+            nospawneggs.irongolem.survival: true
+    nospawneggs.irongolem.survival:
+        default: op
+        description: Allows user to create irongolems in survival mode
+    nospawneggs.irongolem.creative:
+        default: op
+        description: Allows user to create irongolems in creative mode
+    

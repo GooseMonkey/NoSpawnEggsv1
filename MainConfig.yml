@@ -16,6 +16,11 @@ snowGolemBlocking:
     onlyCreative: true
     ignoredWorlds:
     - ExampleWorld
+ironGolemBlocking:
+    enable: true
+    onlyCreative: true
+    ignoredWorlds:
+    - ExampleWorld
 chickenEggBlocking:
     eggThrowBlocking:
         enable: true
