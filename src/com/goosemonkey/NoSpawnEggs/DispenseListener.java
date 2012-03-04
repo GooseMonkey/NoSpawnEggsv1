@@ -7,23 +7,31 @@ import org.bukkit.event.block.BlockDispenseEvent;
 
 public class DispenseListener implements Listener
 {
-	@EventHandler // Handle dispensed spawner eggs
-	public void onDispense(BlockDispenseEvent event)
+	@EventHandler
+	public void onBlockDispense(BlockDispenseEvent event)
 	{
-		// If it wasn't a spawn egg, stop.
-		try
+		int id = event.getItem().getTypeId();
+		
+		if (id == 383)
 		{
-			if (event.getItem().getTypeId() != 383)
-			{
-				return;
-			}
-		}
-		catch (NullPointerException exc)
-		{
-			// nothing dispensed? or just a null item
+			this.onSpawnEggDispense(event);
 			return;
 		}
 		
+		if (id == Material.FIREBALL.getId())
+		{
+			this.onFireChargeDispense(event);
+			return;
+		}
+		
+		if (id == Material.EXP_BOTTLE.getId())
+		{
+			this.onExpBottleDispense(event);
+		}
+	}
+	
+	public void onSpawnEggDispense(BlockDispenseEvent event)
+	{
 		// If it's disabled, stop.
 		if (!NoSpawnEggs.getMainConfig().getBoolean("spawnEggDispenseBlocking.enable", true))
 		{
@@ -48,23 +56,9 @@ public class DispenseListener implements Listener
 		event.setCancelled(true);
 	}
 	
-	@EventHandler // Handle Fire Charge blocking
-	public void onDispense2(BlockDispenseEvent event)
+	public void onFireChargeDispense(BlockDispenseEvent event)
 	{
 		// Preliminaries
-		try
-		{
-			if (event.getItem().getTypeId() != Material.FIREBALL.getId())
-			{
-				return;
-			}
-		}
-		catch (NullPointerException exc)
-		{
-			// nothing dispensed? or just a null item
-			return;
-		}
-
 		if (!NoSpawnEggs.getMainConfig().getBoolean("fireChargeDispenseBlocking.enable", true))
 		{
 			return;
@@ -86,23 +80,9 @@ public class DispenseListener implements Listener
 		event.setCancelled(true);
 	}
 	
-	@EventHandler
-	public void onDispense3(BlockDispenseEvent event)
+	public void onExpBottleDispense(BlockDispenseEvent event)
 	{
 		// Preliminaries
-		try
-		{
-			if (event.getItem().getTypeId() != Material.EXP_BOTTLE.getId())
-			{
-				return;
-			}
-		}
-		catch (NullPointerException exc)
-		{
-			// nothing dispensed? or just a null item
-			return;
-		}
-
 		if (!NoSpawnEggs.getMainConfig().getBoolean("expBottleBlocking.dispenseBlocking.enable", true))
 		{
 			return;
