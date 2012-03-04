@@ -41,6 +41,10 @@ expBottleBlocking:
     ignoredWorlds:
     - ExampleWorld
     onlyCreative: true
+    dispenseBlocking:
+        enable: true
+        ignoredWorlds:
+        - ExampleWorld
 fireChargeDispenseBlocking:
     enable: true
     ignoredWorlds:

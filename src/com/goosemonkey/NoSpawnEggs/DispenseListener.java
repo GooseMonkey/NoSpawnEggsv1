@@ -85,4 +85,42 @@ public class DispenseListener implements Listener
 		
 		event.setCancelled(true);
 	}
+	
+	@EventHandler
+	public void onDispense3(BlockDispenseEvent event)
+	{
+		// Preliminaries
+		try
+		{
+			if (event.getItem().getTypeId() != Material.EXP_BOTTLE.getId())
+			{
+				return;
+			}
+		}
+		catch (NullPointerException exc)
+		{
+			// nothing dispensed? or just a null item
+			return;
+		}
+
+		if (!NoSpawnEggs.getMainConfig().getBoolean("expBottleBlocking.dispenseBlocking.enable", true))
+		{
+			return;
+		}
+		
+		try
+		{
+			if (NoSpawnEggs.getMainConfig().getList("expBottleBlocking.dispenseBlocking.ignoredWorlds").
+					contains(event.getBlock().getWorld().getName()))
+			{
+				return;
+			}
+		}
+		catch (NullPointerException exc)
+		{
+			// list dont exist
+		}
+		
+		event.setCancelled(true);
+	}
 }

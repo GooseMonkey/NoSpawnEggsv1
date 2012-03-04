@@ -45,7 +45,8 @@ public class Main extends Config
 				"MC 1.2). Worlds on ignoredWorlds will not be affected.\n\n" +
 				
 				"expBottleBlocking: Prevents players from being able to throw Bottles of Enchanting.\n" +
-				"As of MC 1.2, experience isn't required to enchant in creative, so this won't effect enchanting much.\n\n" +
+				"As of MC 1.2, experience isn't required to enchant in creative, so this won't effect enchanting much.\n" +
+				"dispenseBlocking prevents them from coming out of dispensers.\n\n" +
 				
 				"fireChargeDispenseBlocking: Prevents dispensers from shooting fire charges (Added MC\n" +
 				"1.2), to combat griefing and lag." +
@@ -91,6 +92,9 @@ public class Main extends Config
 		
 		checkSet("fireChargeDispenseBlocking.enable", true);
 		checkSet("fireChargeDispenseBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
+		
+		checkSet("expBottleBlocking.dispenseBlocking.enable", true);
+		checkSet("expBottleBlocking.dispenseBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 		
 //		checkSet("timer.spawnerEggs", 30);
 //		checkSet("timer.snowGolems", -1);
