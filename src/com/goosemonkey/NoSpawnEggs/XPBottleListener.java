@@ -8,6 +8,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+/**
+ * Blocks throwing XP Bottles
+ * @author GooseMonkey97
+ */
 public class XPBottleListener implements Listener
 {
 	@EventHandler

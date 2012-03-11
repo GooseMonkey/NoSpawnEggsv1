@@ -73,11 +73,19 @@ public class NoSpawnEggs extends JavaPlugin
 		return false;
 	}
 	
+	/**
+	 * Get the plugin's main configuration
+	 * @return FileConfiguration for MainConfig.yml
+	 */
 	public static FileConfiguration getMainConfig()
 	{
 		return mainConfig.getConfig();
 	}
 	
+	/**
+	 * Get the plugin's locale configuration
+	 * @return FileConfiguration for Locale.yml
+	 */
 	public static FileConfiguration getLocaleConfig()
 	{
 		return localeConfig.getConfig();

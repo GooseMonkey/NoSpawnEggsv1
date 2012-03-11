@@ -3,6 +3,10 @@ package com.goosemonkey.NoSpawnEggs.NewConfig;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Locale.yml Object
+ * @author GooseMonkey97
+ */
 public class Locale extends Config
 {
 	private Locale (JavaPlugin inst, String fileName)

@@ -8,6 +8,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
+/**
+ * Blocks Iron and Snow Golems
+ * @author GooseMonkey97
+ */
 public class PlayerPumpkinListener implements Listener
 {
 	@EventHandler (priority = EventPriority.LOWEST)

@@ -4,6 +4,10 @@ import java.util.Arrays;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * MainConfig.yml Object
+ * @author GooseMonkey97
+ */
 public class Main extends Config
 {
 	private Main (JavaPlugin inst, String fileName)

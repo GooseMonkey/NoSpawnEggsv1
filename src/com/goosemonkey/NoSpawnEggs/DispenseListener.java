@@ -5,6 +5,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 
+/**
+ * Blocks dispensing of Spawn Eggs, Fire Charges and XP Bottles
+ * @author GooseMonkey97
+ */
 public class DispenseListener implements Listener
 {
 	@EventHandler

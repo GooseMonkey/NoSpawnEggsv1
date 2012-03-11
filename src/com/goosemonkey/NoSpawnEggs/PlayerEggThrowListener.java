@@ -7,6 +7,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+/**
+ * Blocks Spawner Eggs
+ * @author GooseMonkey97
+ */
 public class PlayerEggThrowListener implements Listener
 {
 	@EventHandler

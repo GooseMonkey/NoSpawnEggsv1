@@ -8,6 +8,11 @@ import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Blocks players and dispensers from spawning chickens with eggs
+ * @author GooseMonkey97
+ *
+ */
 public class ChickenEggListener implements Listener
 {
 	@EventHandler
