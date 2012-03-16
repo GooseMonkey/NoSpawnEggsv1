@@ -23,7 +23,7 @@ public class ChickenEggListener implements Listener
 			return;
 		}
 		
-		if (e.getPlayer().hasPermission("nospawneggs.chickenegg.*"))
+		if (NoSpawnEggs.hasPermission(e.getPlayer(), "nospawneggs.chickenegg.*"))
 		{
 			return;
 		}
@@ -44,7 +44,7 @@ public class ChickenEggListener implements Listener
 		
 		if (e.getPlayer().getGameMode() == GameMode.CREATIVE)
 		{
-			if (e.getPlayer().hasPermission("nospawneggs.chickenegg.creative"))
+			if (NoSpawnEggs.hasPermission(e.getPlayer(), "nospawneggs.chickenegg.creative"))
 			{
 				return;
 			}
@@ -52,7 +52,7 @@ public class ChickenEggListener implements Listener
 		
 		if (e.getPlayer().getGameMode() == GameMode.SURVIVAL)
 		{
-			if (e.getPlayer().hasPermission("nospawneggs.chickenegg.survival"))
+			if (NoSpawnEggs.hasPermission(e.getPlayer(), "nospawneggs.chickenegg.survival"))
 			{
 				return;
 			}

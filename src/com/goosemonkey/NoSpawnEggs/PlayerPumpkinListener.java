@@ -30,7 +30,7 @@ public class PlayerPumpkinListener implements Listener
 			if (loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY()-1, loc.getBlockZ()).getType().equals(Material.SNOW_BLOCK)
 				&& loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY()-2, loc.getBlockZ()).getType().equals(Material.SNOW_BLOCK))
 			{
-				if (e.getPlayer().hasPermission("nospawneggs.snowgolem.*")||
+				if (NoSpawnEggs.hasPermission(e.getPlayer(), "nospawneggs.snowgolem.*")||
 						!NoSpawnEggs.getMainConfig().getBoolean("snowGolemBlocking.enable", true))
 				{
 					return;
@@ -55,7 +55,7 @@ public class PlayerPumpkinListener implements Listener
 				{
 					if (playerGM.equals(GameMode.CREATIVE))
 					{
-						if (e.getPlayer().hasPermission("nospawneggs.snowgolem.creative"))
+						if (NoSpawnEggs.hasPermission(e.getPlayer(), "nospawneggs.snowgolem.creative"))
 						{
 							return;
 						}
@@ -68,7 +68,7 @@ public class PlayerPumpkinListener implements Listener
 							return;
 						}
 						
-						if (e.getPlayer().hasPermission("nospawneggs.snowgolem.survival"))
+						if (NoSpawnEggs.hasPermission(e.getPlayer(), "nospawneggs.snowgolem.survival"))
 						{
 							return;
 						}
@@ -87,7 +87,7 @@ public class PlayerPumpkinListener implements Listener
 						((loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY()-1, loc.getBlockZ()+1).getType().equals(Material.IRON_BLOCK) &&
 								loc.getWorld().getBlockAt(loc.getBlockX(), loc.getBlockY()-1, loc.getBlockZ()-1).getType().equals(Material.IRON_BLOCK)))))
 			{
-				if (e.getPlayer().hasPermission("nospawneggs.irongolem.*")||
+				if (NoSpawnEggs.hasPermission(e.getPlayer(), "nospawneggs.irongolem.*")||
 						!NoSpawnEggs.getMainConfig().getBoolean("ironGolemBlocking.enable", true))
 				{
 					return;
@@ -112,7 +112,7 @@ public class PlayerPumpkinListener implements Listener
 				{
 					if (playerGM.equals(GameMode.CREATIVE))
 					{
-						if (e.getPlayer().hasPermission("nospawneggs.irongolem.creative"))
+						if (NoSpawnEggs.hasPermission(e.getPlayer(), "nospawneggs.irongolem.creative"))
 						{
 							return;
 						}
@@ -125,7 +125,7 @@ public class PlayerPumpkinListener implements Listener
 							return;
 						}
 						
-						if (e.getPlayer().hasPermission("nospawneggs.irongolem.survival"))
+						if (NoSpawnEggs.hasPermission(e.getPlayer(), "nospawneggs.irongolem.survival"))
 						{
 							return;
 						}

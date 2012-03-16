@@ -41,7 +41,7 @@ public class EnderEyeListener implements Listener
 	
 	private void handleEye(PlayerInteractEvent event)
 	{
-		if (event.getPlayer().hasPermission("nospawneggs.ender.eye"))
+		if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.ender.eye"))
 			return;
 		
 		if (!NoSpawnEggs.getMainConfig().getBoolean("enderBlocking.blockEnderEye", true))
@@ -65,7 +65,7 @@ public class EnderEyeListener implements Listener
 	
 	private void handlePearl(PlayerInteractEvent event)
 	{
-		if (event.getPlayer().hasPermission("nospawneggs.ender.pearl"))
+		if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.ender.pearl"))
 			return;
 		
 		if (!NoSpawnEggs.getMainConfig().getBoolean("enderBlocking.blockEnderPearl", true))

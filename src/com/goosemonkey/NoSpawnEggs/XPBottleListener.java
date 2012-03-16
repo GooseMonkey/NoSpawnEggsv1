@@ -33,7 +33,7 @@ public class XPBottleListener implements Listener
 			return;
 		}
 		
-		if (event.getPlayer().hasPermission("nospawneggs.expbottle.*") || event.getPlayer().isOp())
+		if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.expbottle.*") || event.getPlayer().isOp())
 		{
 			return;
 		}
@@ -47,7 +47,7 @@ public class XPBottleListener implements Listener
 		
 		if (player.getGameMode() == GameMode.CREATIVE)
 		{
-			if (player.hasPermission("nospawneggs.expbottle.creative"))
+			if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.expbottle.creative"))
 			{
 				return;
 			}
@@ -55,7 +55,7 @@ public class XPBottleListener implements Listener
 		
 		if (player.getGameMode() == GameMode.SURVIVAL)
 		{
-			if (player.hasPermission("nospawneggs.expbottle.survival"))
+			if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.expbottle.survival"))
 			{
 				return;
 			}

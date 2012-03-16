@@ -30,7 +30,7 @@ public class PlayerEggThrowListener implements Listener
 	private void onPlayerSpawnerEgg(PlayerInteractEvent event)
 	{
 		//If they have all perms or are an op, return now.
-		if (event.getPlayer().hasPermission("nospawneggs.*") ||
+		if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.*") ||
 				event.getPlayer().isOp())
 		{
 			return;
@@ -61,7 +61,7 @@ public class PlayerEggThrowListener implements Listener
 	public boolean canPlayerUseEgg(PlayerSpawnerEggEvent event)
 	{
 		//First, make sure that that entity's blocking is on.
-		if (event.getPlayer().hasPermission("nospawneggs.*"))
+		if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.*"))
 		{
 			return true;
 		}
@@ -76,7 +76,7 @@ public class PlayerEggThrowListener implements Listener
 		//Next comes checking permissions on the player for known entities.
 		if (event.getEntityBreed().getCategory() != EntityCategory.UNKNOWN)
 		{
-			if (event.getPlayer().hasPermission("nospawneggs." +
+			if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs." +
 					event.getEntityBreed().getCategory().name().toLowerCase() + "." +
 					event.getEntityBreed().getPermName()))
 			{
@@ -86,7 +86,7 @@ public class PlayerEggThrowListener implements Listener
 		//Then, check for unknown entities.
 		else
 		{
-			if (event.getPlayer().hasPermission("nospawneggs.id." +
+			if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.id." +
 					event.getEntityId()))
 			{
 				return true;
@@ -100,7 +100,7 @@ public class PlayerEggThrowListener implements Listener
 		
 		//If they don't have permission yet, check Timer to see if it's time.
 		
-		if (!event.getPlayer().hasPermission("nospawneggs.timer.egg"))
+		if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.timer.egg"))
 		{
 			// There hasn't been a return yet, and they can't use timer, so block.
 			return false;

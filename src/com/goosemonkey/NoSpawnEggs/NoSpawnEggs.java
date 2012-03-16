@@ -4,6 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.goosemonkey.NoSpawnEggs.NewConfig.*;
@@ -55,7 +56,7 @@ public class NoSpawnEggs extends JavaPlugin
 		
 		if (arg.equalsIgnoreCase("reload"))
 		{
-			if (sender.hasPermission("nospawneggs.reload") || sender.isOp() || sender instanceof ConsoleCommandSender){
+			if (hasPermission(sender, "nospawneggs.reload") || sender.isOp() || sender instanceof ConsoleCommandSender){
 				localeConfig.reload();
 				mainConfig.reload();
 				
@@ -90,5 +91,27 @@ public class NoSpawnEggs extends JavaPlugin
 	public static FileConfiguration getLocaleConfig()
 	{
 		return localeConfig.getConfig();
+	}
+	
+	/**
+	 * Find if a player has a permission using the plugin's current system
+	 * @param player Player
+	 * @param perm Node
+	 * @return Whether they have it
+	 */
+	public static boolean hasPermission(Player player, String perm)
+	{
+		return player.hasPermission(perm);
+	}
+	
+	/**
+	 * Find if a CommandSender has a permission using the plugin's current system
+	 * @param sender Sender
+	 * @param perm Node
+	 * @return Whether they have it
+	 */
+	public static boolean hasPermission(CommandSender sender, String perm)
+	{
+		return sender.hasPermission(perm);
 	}
 }
