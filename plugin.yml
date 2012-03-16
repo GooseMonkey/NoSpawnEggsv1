@@ -4,6 +4,7 @@ version: 1.5.1
 description: Prevents people without the appropriate permission from spawning mobs with Spawn Eggs.
 author: GooseMonkey97
 website: http://dev.bukkit.org/server-mods/nospawneggs/
+softdepend: [Vault]
 commands:
     nospawneggs:
         description: Reloads the config
