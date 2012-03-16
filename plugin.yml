@@ -23,6 +23,9 @@ permissions:
             nospawneggs.id.*: true
             nospawneggs.unknown: true
             nospawneggs.chickenegg.*: true
+            nospawneggs.irongolem.*: true
+            nospawneggs.expbottle.*: true
+            nospawneggs.ender.*: true
     nospawneggs.animal.*:
         default: op
         description: Gives access to animal spawning
@@ -107,3 +110,16 @@ permissions:
     nospawneggs.expbottle.creative:
         default: op
         description: Allows user to spawn XP with bottles in creative
+    nospawneggs.ender.*:
+        default: op
+        description: Ender Pearls and Eyes
+        children:
+            nospawneggs.ender.pearl: true
+            nospawneggs.ender.eye: true
+    nospawneggs.ender.pearl:
+        default: op
+        description: Allows user to throw and teleport with Ender Pearls
+    nospawneggs.ender.eye:
+        default: op
+        description: Allows user to throw Eyes of Ender
+    

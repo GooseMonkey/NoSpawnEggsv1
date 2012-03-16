@@ -53,7 +53,9 @@ public class Main extends Config
 				"dispenseBlocking prevents them from coming out of dispensers.\n\n" +
 				
 				"fireChargeDispenseBlocking: Prevents dispensers from shooting fire charges (Added MC\n" +
-				"1.2), to combat griefing and lag." +
+				"1.2), to combat griefing and lag.\n\n" +
+				
+				"enderBlocking: Prevents Ender Pearls and Ender Eyes\n\n" +
 				
 //				"timer: Allow users to override the blocking once every x seconds, defined here.\n" +
 //				"A user must have the permission nospawneggs.timer.[egg/golem/chickenegg] for the timer\n" +
@@ -99,6 +101,12 @@ public class Main extends Config
 		
 		checkSet("expBottleBlocking.dispenseBlocking.enable", true);
 		checkSet("expBottleBlocking.dispenseBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
+		
+		checkSet("enderBlocking.blockEnderPearl", true);
+		checkSet("enderBlocking.enderPearlIgnoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
+		checkSet("enderBlocking.blockEnderEye", true);
+		checkSet("enderBlocking.enderEyeIgnoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
+		checkSet("enderBlocking.eyeOnlyBlockCreative", true);
 		
 //		checkSet("timer.spawnerEggs", 30);
 //		checkSet("timer.snowGolems", -1);

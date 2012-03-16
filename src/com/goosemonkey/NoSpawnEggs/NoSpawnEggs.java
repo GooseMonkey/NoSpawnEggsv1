@@ -26,6 +26,7 @@ public class NoSpawnEggs extends JavaPlugin
 		this.getServer().getPluginManager().registerEvents(new ChickenEggListener(), this);
 		this.getServer().getPluginManager().registerEvents(new DispenseListener(), this);
 		this.getServer().getPluginManager().registerEvents(new XPBottleListener(), this);
+		this.getServer().getPluginManager().registerEvents(new EnderEyeListener(), this);
 		
 		//Ready!
 		this.getLogger().info("NoSpawnEggs v"+this.getDescription().getVersion()+" enabled!");

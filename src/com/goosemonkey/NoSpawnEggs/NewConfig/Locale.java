@@ -121,6 +121,10 @@ public class Locale extends Config
 		f.set("noChickenEggPerms", "You don't have permission to spawn Chickens from eggs.");
 		
 		checkSet("noExpBottlePerm", "You don't have pemission to spawn Experience Orbs.");
+		
+		checkSet("noEnderEyePerm", "You don't have permission to throw Eyes of Ender.");
+		
+		checkSet("noEnderPearlPerm", "You don't have permission to throw Ender Pearls.");
 
 		
 //		if (!f.isSet("timerMessage"))
