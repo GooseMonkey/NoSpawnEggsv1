@@ -125,6 +125,10 @@ public class Locale extends Config
 		checkSet("noEnderEyePerm", "You don't have permission to throw Eyes of Ender.");
 		
 		checkSet("noEnderPearlPerm", "You don't have permission to throw Ender Pearls.");
+		
+		checkSet("noBoatPerm", "You don't have permission to create boats.");
+		
+		checkSet("noMinecartPerm", "You don't have permission to create minecarts.");
 
 		
 //		if (!f.isSet("timerMessage"))

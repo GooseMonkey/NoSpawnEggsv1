@@ -11,12 +11,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.goosemonkey.NoSpawnEggs.NewConfig.*;
-import com.goosemonkey.NoSpawnEggs.listeners.ChickenEggListener;
-import com.goosemonkey.NoSpawnEggs.listeners.DispenseListener;
-import com.goosemonkey.NoSpawnEggs.listeners.EnderEyeListener;
-import com.goosemonkey.NoSpawnEggs.listeners.PlayerEggThrowListener;
-import com.goosemonkey.NoSpawnEggs.listeners.PlayerPumpkinListener;
-import com.goosemonkey.NoSpawnEggs.listeners.XPBottleListener;
+import com.goosemonkey.NoSpawnEggs.listeners.*;
 
 public class NoSpawnEggs extends JavaPlugin
 {
@@ -40,6 +35,7 @@ public class NoSpawnEggs extends JavaPlugin
 		this.getServer().getPluginManager().registerEvents(new DispenseListener(), this);
 		this.getServer().getPluginManager().registerEvents(new XPBottleListener(), this);
 		this.getServer().getPluginManager().registerEvents(new EnderEyeListener(), this);
+		this.getServer().getPluginManager().registerEvents(new BoatMinecartListener(), this);
 		
 		//Permissions
 		if (this.setupPermissions())

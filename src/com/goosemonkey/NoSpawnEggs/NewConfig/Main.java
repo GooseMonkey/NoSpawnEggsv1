@@ -108,6 +108,14 @@ public class Main extends Config
 		checkSet("enderBlocking.enderEyeIgnoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 		checkSet("enderBlocking.eyeOnlyBlockCreative", true);
 		
+		checkSet("boatBlocking.enable", true);
+		checkSet("boatBlocking.ignoredWorlds", true);
+		checkSet("boatBlocking.onlyCreative", true);
+		
+		checkSet("minecartBlocking.enable", true);
+		checkSet("minecartBlocking.ignoredWorlds", true);
+		checkSet("minecartBlocking.onlyCreative", true);
+		
 //		checkSet("timer.spawnerEggs", 30);
 //		checkSet("timer.snowGolems", -1);
 //		checkSet("timer.chickenEggs", 10);

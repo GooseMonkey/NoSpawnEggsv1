@@ -123,4 +123,17 @@ permissions:
     nospawneggs.ender.eye:
         default: op
         description: Allows user to throw Eyes of Ender
+    nospawneggs.boat.*:
+        default: op
+        description: Boat placing in both creative and survival
+        children:
+            nospawneggs.boat.creative: true
+            nospawneggs.boat.survival: true
+    nospawneggs.minecart.*:
+        default: op
+        description: Minecart placing in both creative and survival
+        children:
+            nospawneggs.minecart.creative: true
+            nospawneggs.minecart.survival: true
+    
     
