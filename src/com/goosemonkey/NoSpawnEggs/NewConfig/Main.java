@@ -75,15 +75,15 @@ public class Main extends Config
 		checkSet("allowAllSpawns.perWorld.ExampleWorld.blockedIds", Arrays.asList(new Integer[]{51}));
 		
 		checkSet("snowGolemBlocking.enable", true);
-		checkSet("snowGolemBlocking.onlyCreative", true);
+		checkSet("snowGolemBlocking.onlyCreative", false);
 		checkSet("snowGolemBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 		
 		checkSet("ironGolemBlocking.enable", true);
-		checkSet("ironGolemBlocking.onlyCreative", true);
+		checkSet("ironGolemBlocking.onlyCreative", false);
 		checkSet("ironGolemBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 		
 		checkSet("chickenEggBlocking.eggThrowBlocking.enable", true);
-		checkSet("chickenEggBlocking.eggThrowBlocking.onlyCreative", true);
+		checkSet("chickenEggBlocking.eggThrowBlocking.onlyCreative", false);
 		checkSet("chickenEggBlocking.eggThrowBlocking.sendMessage", true);
 		checkSet("chickenEggBlocking.eggThrowBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 		checkSet("chickenEggBlocking.dispenseBlocking.enable", true);
@@ -94,7 +94,7 @@ public class Main extends Config
 
 		checkSet("expBottleBlocking.enable", true);
 		checkSet("expBottleBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
-		checkSet("expBottleBlocking.onlyCreative", true);
+		checkSet("expBottleBlocking.onlyCreative", false);
 		
 		checkSet("fireChargeDispenseBlocking.enable", true);
 		checkSet("fireChargeDispenseBlocking.ignoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
@@ -106,15 +106,15 @@ public class Main extends Config
 		checkSet("enderBlocking.enderPearlIgnoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
 		checkSet("enderBlocking.blockEnderEye", true);
 		checkSet("enderBlocking.enderEyeIgnoredWorlds", Arrays.asList(new String[]{"ExampleWorld"}));
-		checkSet("enderBlocking.eyeOnlyBlockCreative", true);
+		checkSet("enderBlocking.eyeOnlyBlockCreative", false);
 		
 		checkSet("boatBlocking.enable", true);
 		checkSet("boatBlocking.ignoredWorlds", true);
-		checkSet("boatBlocking.onlyCreative", true);
+		checkSet("boatBlocking.onlyCreative", false);
 		
 		checkSet("minecartBlocking.enable", true);
 		checkSet("minecartBlocking.ignoredWorlds", true);
-		checkSet("minecartBlocking.onlyCreative", true);
+		checkSet("minecartBlocking.onlyCreative", false);
 		
 //		checkSet("timer.spawnerEggs", 30);
 //		checkSet("timer.snowGolems", -1);
