@@ -1,4 +1,4 @@
-package com.goosemonkey.NoSpawnEggs;
+package com.goosemonkey.NoSpawnEggs.listeners;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -7,6 +7,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.inventory.ItemStack;
+
+import com.goosemonkey.NoSpawnEggs.NoSpawnEggs;
 
 /**
  * Blocks players and dispensers from spawning chickens with eggs

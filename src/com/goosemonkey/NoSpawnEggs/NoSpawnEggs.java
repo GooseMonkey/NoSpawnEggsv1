@@ -11,6 +11,12 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.goosemonkey.NoSpawnEggs.NewConfig.*;
+import com.goosemonkey.NoSpawnEggs.listeners.ChickenEggListener;
+import com.goosemonkey.NoSpawnEggs.listeners.DispenseListener;
+import com.goosemonkey.NoSpawnEggs.listeners.EnderEyeListener;
+import com.goosemonkey.NoSpawnEggs.listeners.PlayerEggThrowListener;
+import com.goosemonkey.NoSpawnEggs.listeners.PlayerPumpkinListener;
+import com.goosemonkey.NoSpawnEggs.listeners.XPBottleListener;
 
 public class NoSpawnEggs extends JavaPlugin
 {

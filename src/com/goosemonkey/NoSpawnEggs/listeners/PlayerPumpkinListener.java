@@ -1,4 +1,4 @@
-package com.goosemonkey.NoSpawnEggs;
+package com.goosemonkey.NoSpawnEggs.listeners;
 
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -7,6 +7,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
+
+import com.goosemonkey.NoSpawnEggs.NoSpawnEggs;
 
 /**
  * Blocks Iron and Snow Golems

@@ -1,9 +1,11 @@
-package com.goosemonkey.NoSpawnEggs;
+package com.goosemonkey.NoSpawnEggs.listeners;
 
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
+
+import com.goosemonkey.NoSpawnEggs.NoSpawnEggs;
 
 /**
  * Blocks dispensing of Spawn Eggs, Fire Charges and XP Bottles
