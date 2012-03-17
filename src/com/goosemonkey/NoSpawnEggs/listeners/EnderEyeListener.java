@@ -43,7 +43,7 @@ public class EnderEyeListener implements Listener
 	
 	private void handleEye(PlayerInteractEvent event)
 	{
-		if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.ender.eye"))
+		if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.ender.eye.*"))
 			return;
 		
 		if (!NoSpawnEggs.getMainConfig().getBoolean("enderBlocking.blockEnderEye", true))
@@ -59,6 +59,14 @@ public class EnderEyeListener implements Listener
 		if (event.getPlayer().getGameMode().equals(GameMode.SURVIVAL) &&
 				NoSpawnEggs.getMainConfig().getBoolean("enderBlocking.eyeOnlyBlockCreative", true))
 			return;
+		
+		if (event.getPlayer().getGameMode().equals(GameMode.SURVIVAL))
+			if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.ender.eye.survival"))
+				return;
+		
+		if (event.getPlayer().getGameMode().equals(GameMode.CREATIVE))
+			if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.ender.eye.creative"))
+				return;
 		
 		event.setCancelled(true);
 		event.getPlayer().sendMessage(ChatColor.YELLOW + NoSpawnEggs.getLocaleConfig().getString(

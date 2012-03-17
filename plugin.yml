@@ -120,9 +120,12 @@ permissions:
     nospawneggs.ender.pearl:
         default: op
         description: Allows user to throw and teleport with Ender Pearls
-    nospawneggs.ender.eye:
+    nospawneggs.ender.eye.*:
         default: op
         description: Allows user to throw Eyes of Ender
+        children:
+            nospawneggs.ender.eye.survival: true
+            nospawneggs.ender.eye.creative: true
     nospawneggs.boat.*:
         default: op
         description: Boat placing in both creative and survival
@@ -142,6 +145,7 @@ permissions:
             nospawneggs.irongolem.survival: true
             nospawneggs.chickenegg.survival: true
             nospawneggs.ender.pearl: true
+            nospawneggs.ender.eye.survival: true
             nospawneggs.boat.survival: true
             nospawneggs.minecart.survival: true
     
