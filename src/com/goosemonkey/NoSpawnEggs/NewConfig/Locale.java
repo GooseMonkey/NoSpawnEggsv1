@@ -23,12 +23,8 @@ public class Locale extends Config
 	{
 		return
 			"\n" +
-			"Set custom messages here, for language translations or just to make them better.\n\n" +
-			"reloadedMessage: Sent to a player when successfully reloading the config (/nospawneggs reload)\n" +
-			"noReloadPerms: When the player attempts to reload, but can't.\n" +
-			"noSpawnerEggPerms: When you a player can't spawn a mob via egg. Replace %s with the mob's name.\n" +
-			"noSnowGolemPerms/noIronGolemPerms/noChickenEggPerms/noExpBottlePerms: It's not that hard to figure out. Is it?\n" +
-			"" ;
+			"For help: www.tinyurl.com/nseconfig" +
+			"\n" ;
 			
 //			"timerMessage: When the player needs to wait before doing this action again."
 	}
