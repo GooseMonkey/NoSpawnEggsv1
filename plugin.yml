@@ -135,5 +135,13 @@ permissions:
         children:
             nospawneggs.minecart.creative: true
             nospawneggs.minecart.survival: true
-    
+    nospawneggs.user:
+        description: All permissions most users should have in survival
+        children:
+            nospawneggs.snowgolem.survival: true
+            nospawneggs.irongolem.survival: true
+            nospawneggs.chickenegg.survival: true
+            nospawneggs.ender.pearl: true
+            nospawneggs.boat.survival: true
+            nospawneggs.minecart.survival: true
     
