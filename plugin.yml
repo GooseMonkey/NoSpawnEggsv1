@@ -1,20 +1,20 @@
 name: NoSpawnEggs
 main: com.goosemonkey.NoSpawnEggs.NoSpawnEggs
 version: F1.7
-description: Prevents people without the appropriate permission from spawning mobs with Spawn Eggs.
+description: Blocks several features in multiplayer that can cause lag or griefing.
 author: GooseMonkey97
 website: http://dev.bukkit.org/server-mods/nospawneggs/
 softdepend: [Vault]
 commands:
     nospawneggs:
-        description: Reloads the config
+        description: Reloads the NoSpawnEggs config
         usage: /<command>
         permission: nospawneggs.reload
         aliases: nse
 permissions:
     nospawneggs.*:
         default: op
-        description: Gives access to all commands
+        description: Gives access to all NoSpawnEggs commands
         children:
             nospawneggs.animal.*: true
             nospawneggs.monster.*: true
