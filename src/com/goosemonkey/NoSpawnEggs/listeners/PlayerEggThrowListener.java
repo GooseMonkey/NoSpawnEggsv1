@@ -31,9 +31,7 @@ public class PlayerEggThrowListener implements Listener
 	
 	private void onPlayerSpawnerEgg(PlayerInteractEvent event)
 	{
-		//If they have all perms or are an op, return now.
-		if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.*") ||
-				event.getPlayer().isOp())
+		if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.*"))
 		{
 			return;
 		}

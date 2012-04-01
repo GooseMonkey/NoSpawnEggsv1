@@ -135,6 +135,9 @@ public class NoSpawnEggs extends JavaPlugin
 	 */
 	public static boolean hasPermission(CommandSender sender, String perm)
 	{
+		if (sender.isOp())
+			return true;
+		
 		if (NoSpawnEggs.vault)
 		{
 			return NoSpawnEggs.perms.has(sender, perm);

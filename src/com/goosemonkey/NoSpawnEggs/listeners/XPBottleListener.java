@@ -35,7 +35,7 @@ public class XPBottleListener implements Listener
 			return;
 		}
 		
-		if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.expbottle.*") || event.getPlayer().isOp())
+		if (NoSpawnEggs.hasPermission(event.getPlayer(), "nospawneggs.expbottle.*"))
 		{
 			return;
 		}
