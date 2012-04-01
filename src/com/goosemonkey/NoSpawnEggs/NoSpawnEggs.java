@@ -86,7 +86,8 @@ public class NoSpawnEggs extends JavaPlugin
 	{
 		if (args.length != 1)
 		{
-			sender.sendMessage("§eNoSpawnEggs version " + this.getDescription().getVersion());
+			sender.sendMessage("§eNoSpawnEggs " + NoSpawnEggs.getPluginLevel() + " v" + 
+					this.getDescription().getVersion());
 			
 			return true;
 		}
