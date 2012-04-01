@@ -111,7 +111,7 @@ public class NoSpawnEggs extends JavaPlugin
 			else
 			{
 				sender.sendMessage("§e" + NoSpawnEggs.getLocaleConfig().getString("noReloadPerms", 
-						"§eNoSpawnEggs config reloaded."));
+						"You don't have permission."));
 			}
 			
 			return true;
