@@ -21,21 +21,48 @@ public class NoSpawnEggs extends JavaPlugin
 	
     private static Permission perms = null;
     private static boolean vault = false;
+    
+    private static PluginLevel level = PluginLevel.FULL;
 	
 	public void onEnable() 
-	{		
+	{	
+		//Level
+		String ver = this.getDescription().getVersion();
+		
+		if (ver.startsWith("L"))
+		{
+			NoSpawnEggs.level = PluginLevel.LIGHT;
+		}
+		else if (ver.startsWith("M"))
+		{
+			NoSpawnEggs.level = PluginLevel.MODERATE;
+		}
+		else if (ver.startsWith("F"))
+		{
+			NoSpawnEggs.level = PluginLevel.FULL;
+		}
+		
 		//Prepare YMLs
 		mainConfig = new Main(this);
 		localeConfig = new Locale(this);
 		
-		//Regiseter Listeners
+		//Register Listeners
 		this.getServer().getPluginManager().registerEvents(new PlayerEggThrowListener(), this);
-		this.getServer().getPluginManager().registerEvents(new PlayerPumpkinListener(), this);
-		this.getServer().getPluginManager().registerEvents(new ChickenEggListener(), this);
 		this.getServer().getPluginManager().registerEvents(new DispenseListener(), this);
-		this.getServer().getPluginManager().registerEvents(new XPBottleListener(), this);
-		this.getServer().getPluginManager().registerEvents(new EnderEyeListener(), this);
-		this.getServer().getPluginManager().registerEvents(new BoatMinecartListener(), this);
+		
+		if (NoSpawnEggs.getPluginLevel() == PluginLevel.MODERATE ||
+				NoSpawnEggs.getPluginLevel() == PluginLevel.FULL)
+		{
+			this.getServer().getPluginManager().registerEvents(new PlayerPumpkinListener(), this);
+			this.getServer().getPluginManager().registerEvents(new ChickenEggListener(), this);
+		}
+		
+		if (NoSpawnEggs.getPluginLevel() == PluginLevel.FULL)
+		{
+			this.getServer().getPluginManager().registerEvents(new XPBottleListener(), this);
+			this.getServer().getPluginManager().registerEvents(new EnderEyeListener(), this);
+			this.getServer().getPluginManager().registerEvents(new BoatMinecartListener(), this);
+		}
 		
 		//Permissions
 		if (this.setupPermissions())
@@ -46,12 +73,13 @@ public class NoSpawnEggs extends JavaPlugin
 		}
 		
 		//Ready!
-		this.getLogger().info("NoSpawnEggs v"+this.getDescription().getVersion()+" enabled!");
+		this.getLogger().info("NoSpawnEggs " + NoSpawnEggs.getPluginLevel() + " v" +
+				this.getDescription().getVersion() + " enabled!");
 	}
 
 	public void onDisable()
 	{
-		this.getLogger().info("NoSpawnEggs v"+this.getDescription().getVersion()+" disabled.");
+		this.getLogger().info("NoSpawnEggs " + this.getDescription().getVersion() + " disabled.");
 	}
 	
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
@@ -164,4 +192,14 @@ public class NoSpawnEggs extends JavaPlugin
 		
 		return perms != null;
     }
+	
+	public enum PluginLevel
+	{
+		LIGHT, MODERATE, FULL
+	}
+	
+	public static PluginLevel getPluginLevel()
+	{
+		return NoSpawnEggs.level;
+	}
 }

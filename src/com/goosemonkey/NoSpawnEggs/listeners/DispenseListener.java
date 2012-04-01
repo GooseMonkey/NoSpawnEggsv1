@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDispenseEvent;
 
 import com.goosemonkey.NoSpawnEggs.NoSpawnEggs;
+import com.goosemonkey.NoSpawnEggs.NoSpawnEggs.PluginLevel;
 
 /**
  * Blocks dispensing of Spawn Eggs, Fire Charges and XP Bottles
@@ -23,6 +24,9 @@ public class DispenseListener implements Listener
 			this.onSpawnEggDispense(event);
 			return;
 		}
+		
+		if (NoSpawnEggs.getPluginLevel() != PluginLevel.FULL)
+			return;
 		
 		if (id == Material.FIREBALL.getId())
 		{
