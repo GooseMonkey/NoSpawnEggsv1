@@ -3,6 +3,9 @@ package com.goosemonkey.NoSpawnEggs.NewConfig;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.goosemonkey.NoSpawnEggs.NoSpawnEggs;
+import com.goosemonkey.NoSpawnEggs.NoSpawnEggs.PluginLevel;
+
 /**
  * Locale.yml Object
  * @author GooseMonkey97
@@ -108,6 +111,9 @@ public class Locale extends Config
 		if (!f.isSet("noSpawnerEggPerms"))
 		f.set("noSpawnerEggPerms", "You don't have permission to spawn this %s.");
 
+		if (NoSpawnEggs.getPluginLevel() == PluginLevel.LIGHT)
+			return;
+		
 		if (!f.isSet("noSnowGolemPerms"))
 		f.set("noSnowGolemPerms", "You don't have permission to create Snow Golems.");
 		
@@ -115,6 +121,9 @@ public class Locale extends Config
 
 		if (!f.isSet("noChickenEggPerms"))
 		f.set("noChickenEggPerms", "You don't have permission to spawn Chickens from eggs.");
+		
+		if (NoSpawnEggs.getPluginLevel() == PluginLevel.MODERATE)
+			return;
 		
 		checkSet("noExpBottlePerm", "You don't have pemission to spawn Experience Orbs.");
 		
